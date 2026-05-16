@@ -1,0 +1,65 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
+  <diagram name="Страница-1" id="K3LYEm_-GY0fTjePmFI0">
+    <mxGraphModel dx="1213" dy="1997" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="RcYco2VQhsFncaNTSR_A-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="710" width="700" x="160" y="-40" as="geometry" />
+        </mxCell>
+        <mxCell id="RcYco2VQhsFncaNTSR_A-2" edge="1" parent="1" source="RcYco2VQhsFncaNTSR_A-1" style="endArrow=none;html=1;rounded=0;exitX=0.005;exitY=0.065;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.997;entryY=0.066;entryDx=0;entryDy=0;entryPerimeter=0;" target="RcYco2VQhsFncaNTSR_A-1" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="149.30000000000004" y="25.89999999999997" as="sourcePoint" />
+            <mxPoint x="850.6999999999999" y="20.000000000000107" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RcYco2VQhsFncaNTSR_A-3" edge="1" parent="1" source="RcYco2VQhsFncaNTSR_A-1" style="endArrow=none;html=1;rounded=0;entryX=0.203;entryY=0.008;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.202;exitY=1.003;exitDx=0;exitDy=0;exitPerimeter=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="300.70000000000005" y="542.3300000000002" as="sourcePoint" />
+            <mxPoint x="302.0999999999999" y="-39.99999999999997" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RcYco2VQhsFncaNTSR_A-4" edge="1" parent="1" source="RcYco2VQhsFncaNTSR_A-1" style="endArrow=none;html=1;rounded=0;entryX=0.203;entryY=0.008;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.44;exitY=1.005;exitDx=0;exitDy=0;exitPerimeter=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="470" y="542" as="sourcePoint" />
+            <mxPoint x="471" y="-40" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RcYco2VQhsFncaNTSR_A-5" edge="1" parent="1" source="RcYco2VQhsFncaNTSR_A-1" style="endArrow=none;html=1;rounded=0;entryX=0.203;entryY=0.008;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.731;exitY=1.004;exitDx=0;exitDy=0;exitPerimeter=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="670" y="553" as="sourcePoint" />
+            <mxPoint x="673" y="-40" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RcYco2VQhsFncaNTSR_A-6" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Клиент" vertex="1">
+          <mxGeometry height="30" width="60" x="210" y="-40" as="geometry" />
+        </mxCell>
+        <mxCell id="RcYco2VQhsFncaNTSR_A-7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Система" vertex="1">
+          <mxGeometry height="30" width="60" x="354" y="-40" as="geometry" />
+        </mxCell>
+        <mxCell id="RcYco2VQhsFncaNTSR_A-8" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="База данных" vertex="1">
+          <mxGeometry height="30" width="90" x="530" y="-40" as="geometry" />
+        </mxCell>
+        <mxCell id="RcYco2VQhsFncaNTSR_A-9" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="API курса валют" vertex="1">
+          <mxGeometry height="30" width="90" x="720" y="-40" as="geometry" />
+        </mxCell>
+        <mxCell id="RcYco2VQhsFncaNTSR_A-15" parent="1" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#ff0000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="210" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="RcYco2VQhsFncaNTSR_A-16" edge="1" parent="1" source="RcYco2VQhsFncaNTSR_A-15" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="RcYco2VQhsFncaNTSR_A-17" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="225" y="110" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RcYco2VQhsFncaNTSR_A-17" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" value="Activity" vertex="1">
+          <mxGeometry height="40" width="120" x="165" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="RcYco2VQhsFncaNTSR_A-18" edge="1" parent="1" source="RcYco2VQhsFncaNTSR_A-17" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="230" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
