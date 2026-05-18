@@ -12,7 +12,7 @@
 <body>
     <nav class="navbar">
         <div class="container">
-            <div class="navbar-brand">Гид по странам</div>
+            <div class="navbar-brand"><img src="{% static 'img/logo.png' %}" alt="Логотип" height="50"> Гид по странам</div>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     <li><a class="nav-link" href="{% url 'guide:home' %}">Главная</a></li>
@@ -25,5 +25,10 @@
         {% block content %}
         {% endblock %}
     </main>
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="text-muted">Гид по странам — твой персональный путеводитель по удивительным уголкам мира. </p>
+        </div>
+    </footer>
 </body>
 </html>

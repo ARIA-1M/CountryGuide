@@ -4,8 +4,27 @@
     box-sizing: border-box;
 }
 
+:root{
+  --box-color: #F9FAFB; /* Цвет карточек и светлых элементов интерфейса */
+  --gradient-start: #E5E7EB; /* Начало градиента фона */
+  --gradient-end: #67738C; /* Конец градиента фона */
+  --footer-text: #1F2937; /* Цвет подвала и шапки  и основной цвет текста */
+  --divider-icon: #191C22; /* Дополнительный цвет для разделителей, иконок и второстепенных акцентов */
+  --shadow: 0 6px 8px rgba(17, 18, 24, 0.1); /* Тень */
+  --border-radius: 8px; /* Закругление для элементов */
+}
+
+
+html{
+  scroll-behavior: smooth; 
+  scroll-padding-top: 100px;
+}
+
 body {
     font-family: 'Segoe UI', sans-serif;
+    line-height: 1.1;
+    color: var(--footer-text);
+    background: linear-gradient(var(--gradient-start), var(--gradient-end));
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -18,16 +37,15 @@ body {
     flex: 1;
 }
 
-/* Навигация */
 .navbar {
-    background: linear-gradient(90deg, #1a1a2e, #16213e);
-    padding: 1rem 2rem; 
+    background: var(--footer-text);
+    padding: 1rem 2rem;
     position: relative;
     z-index: 10;
 }
 
 .navbar .container {
-    max-width: 100%;  
+    max-width: 100%;
     margin: 0;
     padding: 0;
     display: flex;
@@ -36,28 +54,50 @@ body {
 }
 
 .navbar-brand {
-    color: #e94560;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--box-color);
     font-size: 1.8rem;
     font-weight: 700;
     text-decoration: none;
-    margin-left: 0;  
+}
+
+.navbar-brand img {
+    height: 50px;
+    width: auto;
 }
 
 .navbar-nav {
     display: flex;
     list-style: none;
     gap: 2rem;
-    margin-right: 0;  
-    margin-left: auto; 
+    margin-right: 0;
+    margin-left: auto;
 }
 
 .nav-link {
-    color: #fff;
+    color: var(--box-color);
     text-decoration: none;
     padding: 0.5rem 1rem;
     border-radius: 25px;
 }
 
 .nav-link:hover {
-    background: #e94560;
+    background: var(--gradient-end);
+}
+
+.footer {
+    background: var(--footer-text);
+    color: var(--box-color);
+    padding: 2rem 2rem;
+    margin-top: auto;
+    width: 100%;
+}
+
+.footer .container {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: left;
 }
