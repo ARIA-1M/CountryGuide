@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    flex: 1;
+}
+
+/* Навигация */
+.navbar {
+    background: linear-gradient(90deg, #1a1a2e, #16213e);
+    padding: 1rem 2rem; 
+    position: relative;
+    z-index: 10;
+}
+
+.navbar .container {
+    max-width: 100%;  
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-brand {
+    color: #e94560;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: 0;  
+}
+
+.navbar-nav {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    margin-right: 0;  
+    margin-left: auto; 
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+}
+
+.nav-link:hover {
+    background: #e94560;
+}
