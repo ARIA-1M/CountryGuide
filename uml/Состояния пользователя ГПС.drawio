@@ -1,0 +1,75 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/27.0.9 Chrome/134.0.6998.205 Electron/35.4.0 Safari/537.36" version="27.0.9">
+  <diagram name="Страница — 1" id="Bd2CXrcLPEfYDVn4nDv5">
+    <mxGraphModel dx="1426" dy="841" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="V6A5Sx8u3VssK5h8KQvn-1" value="" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="399" y="40" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="V6A5Sx8u3VssK5h8KQvn-2" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" source="V6A5Sx8u3VssK5h8KQvn-1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="414" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V6A5Sx8u3VssK5h8KQvn-3" value="Не зарегистрирован" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;fontColor=#000000;collapsible=0;rounded=1;arcSize=30;strokeColor=#ff0000;fillColor=#ffffc0;swimlaneFillColor=#ffffc0;dropTarget=0;" vertex="1" parent="1">
+          <mxGeometry x="330" y="130" width="174" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="V6A5Sx8u3VssK5h8KQvn-4" value="entry/показать форму&lt;div&gt;do/ожидать форму&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;fontColor=#000000;" vertex="1" parent="V6A5Sx8u3VssK5h8KQvn-3">
+          <mxGeometry y="30" width="174" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="V6A5Sx8u3VssK5h8KQvn-5" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" source="V6A5Sx8u3VssK5h8KQvn-3" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="417" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V6A5Sx8u3VssK5h8KQvn-6" value="ввод данных для регистрации" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="414" y="220" width="190" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="V6A5Sx8u3VssK5h8KQvn-7" value="Активен" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;fontColor=#000000;collapsible=0;rounded=1;arcSize=30;strokeColor=#ff0000;fillColor=#ffffc0;swimlaneFillColor=#ffffc0;dropTarget=0;" vertex="1" parent="1">
+          <mxGeometry x="334" y="270" width="166" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="V6A5Sx8u3VssK5h8KQvn-8" value="entry/приветствие&lt;div&gt;do/взаимодействие с системой&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;fontColor=#000000;" vertex="1" parent="V6A5Sx8u3VssK5h8KQvn-7">
+          <mxGeometry y="30" width="166" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="V6A5Sx8u3VssK5h8KQvn-9" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" source="V6A5Sx8u3VssK5h8KQvn-7" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="417" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V6A5Sx8u3VssK5h8KQvn-10" value="поездка начата" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="420" y="360" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="V6A5Sx8u3VssK5h8KQvn-11" value="В поездке" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;fontColor=#000000;collapsible=0;rounded=1;arcSize=30;strokeColor=#ff0000;fillColor=#ffffc0;swimlaneFillColor=#ffffc0;dropTarget=0;" vertex="1" parent="1">
+          <mxGeometry x="325.5" y="410" width="183" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="V6A5Sx8u3VssK5h8KQvn-12" value="entry/активировать учёт расходов и конвертер&lt;div&gt;do/мониторинг бюджета&lt;/div&gt;&lt;div&gt;exit/сохранить историю поездки&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;fontColor=#000000;" vertex="1" parent="V6A5Sx8u3VssK5h8KQvn-11">
+          <mxGeometry y="30" width="183" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="V6A5Sx8u3VssK5h8KQvn-14" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="420" y="600" as="targetPoint" />
+            <mxPoint x="420" y="540" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V6A5Sx8u3VssK5h8KQvn-15" value="Возврат домой" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;fontColor=#000000;collapsible=0;rounded=1;arcSize=30;strokeColor=#ff0000;fillColor=#ffffc0;swimlaneFillColor=#ffffc0;dropTarget=0;" vertex="1" parent="1">
+          <mxGeometry x="337" y="600" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="V6A5Sx8u3VssK5h8KQvn-16" value="entry/фиксация окончания поездки" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;fontColor=#000000;" vertex="1" parent="V6A5Sx8u3VssK5h8KQvn-15">
+          <mxGeometry y="30" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="V6A5Sx8u3VssK5h8KQvn-17" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" source="V6A5Sx8u3VssK5h8KQvn-15" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="417" y="720" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V6A5Sx8u3VssK5h8KQvn-18" value="выплнение плана" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="420" y="554.5" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="V6A5Sx8u3VssK5h8KQvn-19" value="" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="402" y="720" width="30" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
