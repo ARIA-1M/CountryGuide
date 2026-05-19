@@ -7,17 +7,14 @@ from .forms import CountryForm
 def home(request):
     return render(request, 'guides/home.html')
 
-# Добавление новой трассы
+# Добавление новой страны (только одна функция!)
 def country_create(request):
     if request.method == 'POST':
-        form = CountryForm(request.POST, request.FILES)
+        form = CountryForm(request.POST)
         if form.is_valid():
-            country = form.save()
-            messages.success(request, f'Страна "{country.name}" успешно добавлена!')
-            return redirect('guide:home')
+            form.save()
+            return redirect('home')
     else:
         form = CountryForm()
     
-    return render(request, 'guide/country_create.html', {
-        'form': form, 'title': 'Добавить страну'
-    })
+    return render(request, 'guide/country_create.html', {'form': form})

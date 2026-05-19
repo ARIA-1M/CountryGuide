@@ -5,5 +5,5 @@ app_name = 'guide'
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('', views.country_create, name='country_create'),
+    path('country_create/', views.country_create, name='country_create'),
 ]
