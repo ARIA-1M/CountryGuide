@@ -20,8 +20,7 @@ class CountryForm(forms.ModelForm):
 
             'vat_rate': forms.NumberInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Налоговая ставка)',
-                'step': '20.00'
+                'placeholder': 'Налоговая ставка)'
             }),
 
             'language': forms.TextInput(attrs={

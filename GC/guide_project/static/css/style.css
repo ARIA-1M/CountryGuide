@@ -129,15 +129,17 @@ body {
 }
 
 /* Карточка добавление*/
-.container {
+.container-py-4{
     max-width: 700px;
-    margin: 30px 0; 
+    margin: 0 auto;  
+    padding: 20px;
 }
 
 .card {
-    border: 1px solid var(--box-color);
+    border: 1px solid var( --gradient-start);
     border-radius: 10px;
     margin: 50px auto 0;
+    background: var(--box-color); 
 }
 
 .card-header {
