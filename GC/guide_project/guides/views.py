@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import CountryForm
+from .forms import UsersForm
 
 
 
@@ -19,3 +21,18 @@ def country_create(request):
         form = CountryForm()
     
     return render(request, 'guides/country_create.html', {'form': form})
+
+# Регистрация
+def register(request):
+    if request.method == 'POST':
+        form = UsersForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Регистрация прошла успешно! Теперь вы можете войти.')
+            return redirect('/')
+        else:
+            print(form.errors) 
+    else:
+        form = UsersForm()
+    
+    return render(request, 'guides/register.html', {'form': form})

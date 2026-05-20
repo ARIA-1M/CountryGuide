@@ -39,6 +39,85 @@ body {
     flex: 1;
 }
 
+/* Страница входа и регистрации */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+}
+
+.auth-card {
+    max-width: 450px;
+    width: 100%;
+    background: var(--box-color);
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+}
+
+.auth-header {
+    background: var(--footer-text);
+    color: var(--box-color);
+    padding: 20px;
+    border-radius: 15px 15px 0 0;
+    text-align: center;
+}
+
+.auth-header h4 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.auth-body {
+    padding: 25px;
+}
+
+.auth-body .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--gradient-start);
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background: white;
+}
+
+.auth-body .btn-primary {
+    width: 100%;
+    padding: 10px;
+    background: var(--footer-text);
+    border: none;
+    border-radius: 8px;
+    color: var(--box-color);
+    cursor: pointer;
+}
+
+.auth-body .btn-primary:hover {
+    background: var(--divider-icon);
+}
+
+.auth-footer {
+    text-align: center;
+    padding: 15px;
+    border-top: 1px solid var(--gradient-start);
+}
+
+.auth-footer a {
+    color: var(--divider-icon);
+    text-decoration: none;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 576px) {
+    .auth-card {
+        max-width: 100%;
+    }
+}
+
 /* Навигация */
 .navbar {
     background: var(--footer-text);
@@ -130,8 +209,8 @@ body {
 
 /* Карточка добавление*/
 .container-py-4{
-    max-width: 700px;
-    margin: 0 auto;  
+    width: 900px;
+    margin: 0px auto;
     padding: 20px;
 }
 
