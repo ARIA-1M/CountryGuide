@@ -3,6 +3,9 @@
 {% block title %}Главная - ГПС{% endblock %}
 
 {% block content %}
-<div> <p>ГЛАВНАЯ СТРАНИЦА</p></div>
+<div class="text"><p>У настоящего путешественника нет определённого плана и намерения куда-либо приехать</p></div>
+<div class="mt-3">
+    <a href="{% url 'guides:home' %}" class="btn btn-secondary">Начать путешествие</a>
+</div>
 
 {% endblock %}

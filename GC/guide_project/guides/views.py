@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import CountryForm
+from .models import Country
 from .forms import UsersForm
 
 
-
+# Главная страница
 def home(request):
     return render(request, 'guides/home.html')
 
@@ -16,11 +17,41 @@ def country_create(request):
         print(form.errors)  
         if form.is_valid():
             form.save()
-            return redirect('/')
+            return redirect('guides/home')
     else:
         form = CountryForm()
     
     return render(request, 'guides/country_create.html', {'form': form})
+
+# Редактирование страны
+def country_update(request, pk):
+    country = get_object_or_404(Country, pk=pk)
+    
+    if request.method == 'POST':
+        form = CountryForm(request.POST, request.FILES, instance=country)
+        if form.is_valid():
+            country = form.save()
+            messages.success(request, f'Трасса "{country.name}" успешно обновлена!')
+            return redirect('guides/home', pk=country.pk)
+    else:
+        form = CountryForm(instance=country)  
+    
+    return render(request, 'guides/country_create.html', {
+        'form': form, 'title': 'Редактировать страну'
+    })
+
+
+# Удаление страны
+def country_delete(request, pk):
+    country = get_object_or_404(Country, pk=pk)
+    
+    if request.method == 'POST':
+        country_name = country.name
+        country.delete()
+        messages.success(request, f'Трасса "{country_name}" удалена!')
+        return redirect('guides/home')
+    
+    return render(request, 'guides/country_confirm_delete.html', {'country': country})
 
 # Регистрация
 def register(request):
