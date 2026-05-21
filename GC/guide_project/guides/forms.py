@@ -48,59 +48,43 @@ class UsersForm(UserCreationForm):
         self.fields['password1'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Пароль'})
         self.fields['password2'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Подтвердите пароль'})
 
-#Форма для поездок
-class TripForm(forms.ModelForm):
-
+# Форма для создания бюджета с поездкой
+class TripBudgetForm(forms.ModelForm):
+    # Поля бюджета
+    amount = forms.DecimalField(
+        max_digits=10, decimal_places=2,
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Общий бюджет'})
+    )
+    daily_limit = forms.DecimalField(
+        max_digits=10, decimal_places=2,
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Лимит на день'})
+    )
+    threshold_limit = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
+    )
+    
     class Meta:
         model = Trip
-        fields = ['сountry', 'user', 'start_date', 'end_date']
+        fields = ['сountry', 'start_date', 'end_date']
         widgets = {
-           'сountry': forms.Select(attrs={
-                'class': 'form-control' 
-            }),
-
-            'user': forms.Select(attrs={
-                'class': 'form-control' 
-            }),
-
-            'start_date': forms.DateInput(attrs={
-                'class': 'form-control',
-                'placeholder': '2026-05-20'
-            }),
-
-            'end_date': forms.DateInput(attrs={
-                'class': 'form-control',
-                'placeholder': '2026-06-20'
-            }),
+            'сountry': forms.Select(attrs={'class': 'form-control'}),
+            'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
         }
-
-# Форма пользователя бюджета
-class BudgetForm(forms.ModelForm):
-
-    class Meta:
-        model = Budget
-        fields = ['trip', 'amount', 'daily_limit', 'threshold_limit', 'spent']
-        widgets = {
-           'trip': forms.Select(attrs={
-                'class': 'form-control' 
-            }),
-
-            'amount': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'placeholder': '100000'
-            }),
-
-            'daily_limit': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'placeholder': '1000'
-            }),
-
-            'threshold_limit': forms.CheckboxInput(attrs={
-                'class': 'form-check-input'
-            }),
-
-            'spent': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'placeholder': '900'
-            }),
-        }
+    
+    def save(self, user, commit=True):
+        # Создаём поездку
+        trip = super().save(commit=False)
+        trip.user = user
+        if commit:
+            trip.save()
+            # Создаём бюджет для этой поездки
+            Budget.objects.create(
+                trip=trip,
+                amount=self.cleaned_data['amount'],
+                daily_limit=self.cleaned_data['daily_limit'],
+                threshold_limit=self.cleaned_data['threshold_limit'],
+                spent=0
+            )
+        return trip

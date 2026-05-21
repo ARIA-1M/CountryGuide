@@ -10,6 +10,11 @@ from .forms import UsersForm
 def home(request):
     return render(request, 'guides/home.html')
 
+# Список стран
+def country_list(request):
+    countries = Country.objects.all()
+    return render(request, 'guides/country_list.html', {'countries': countries})
+
 # Добавление новой страны 
 def country_create(request):
     if request.method == 'POST':
@@ -67,3 +72,16 @@ def register(request):
         form = UsersForm()
     
     return render(request, 'guides/register.html', {'form': form})
+
+# Создание поездки
+def trip_create(request):
+    if request.method == 'POST':
+        form = TripBudgetForm(request.POST)
+        if form.is_valid():
+            trip = form.save(user=request.user)
+            messages.success(request, f'Поездка в {trip.сountry.name} успешно создана!')
+            return redirect('guides:trip_list')
+    else:
+        form = TripBudgetForm()
+    
+    return render(request, 'guides/trip_create.html', {'form': form, 'title': 'Создать поездку'})

@@ -1,0 +1,123 @@
+{% extends 'guides/base.html' %}
+{% load static %}
+
+{% block title %}ГПС - Создание поездки{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="card">
+        <div class="card-header">
+            <h4>{{ title }}</h4>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label class="form-label">Страна</label>
+                    {{ form.сountry }}
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Дата начала</label>
+                            {{ form.start_date }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Дата окончания</label>
+                            {{ form.end_date }}
+                        </div>
+                    </div>
+                </div>
+                
+                <hr>
+                <h5>Настройка бюджета</h5>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Общий бюджет</label>
+                            {{ form.amount }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Лимит на день</label>
+                            {{ form.daily_limit }}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-3 form-check">
+                    {{ form.threshold_limit }}
+                    <label class="form-check-label">Включить пороговые уведомления</label>
+                </div>
+                
+                <!-- Блок для JS-расчётов -->
+                <div class="alert alert-info" id="budgetInfo" style="display: none;"></div>
+                
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-success">Сохранить</button>
+                    <a href="{% url 'guides:trip_list' %}" class="btn btn-secondary">Отмена</a>
+                </div>
+            </form>
+        </div>  
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const startDate = document.getElementById('id_start_date');
+        const endDate = document.getElementById('id_end_date');
+        const amount = document.getElementById('id_amount');
+        const dailyLimit = document.getElementById('id_daily_limit');
+        const budgetInfo = document.getElementById('budgetInfo');
+        
+        function calculateDays() {
+            if (startDate.value && endDate.value) {
+                const start = new Date(startDate.value);
+                const end = new Date(endDate.value);
+                const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+                return days > 0 ? days : 0;
+            }
+            return 0;
+        }
+        
+        function updateBudgetInfo() {
+            const days = calculateDays();
+            const totalBudget = parseFloat(amount.value) || 0;
+            const daily = parseFloat(dailyLimit.value) || 0;
+            
+            if (days > 0 && totalBudget > 0) {
+                const recommendedDaily = totalBudget / days;
+                let message = `<strong>Прогноз:</strong><br>
+                    Дней поездки: ${days}<br>
+                    Рекомендуемый лимит на день: ${recommendedDaily.toFixed(2)}<br>`;
+                
+                if (daily > 0) {
+                    if (daily > recommendedDaily) {
+                        message += `<span class="text-warning"> Ваш лимит выше рекомендуемого (можно сэкономить)</span>`;
+                    } else if (daily < recommendedDaily) {
+                        message += `<span class="text-danger"> Ваш лимит ниже рекомендуемого (бюджет может не хватить)</span>`;
+                    } else {
+                        message += `<span class="text-success"> Ваш лимит оптимален</span>`;
+                    }
+                }
+                
+                budgetInfo.innerHTML = message;
+                budgetInfo.style.display = 'block';
+            } else {
+                budgetInfo.style.display = 'none';
+            }
+        }
+        
+        startDate.addEventListener('change', updateBudgetInfo);
+        endDate.addEventListener('change', updateBudgetInfo);
+        amount.addEventListener('input', updateBudgetInfo);
+        dailyLimit.addEventListener('input', updateBudgetInfo);
+    });
+</script>
+{% endblock %}
