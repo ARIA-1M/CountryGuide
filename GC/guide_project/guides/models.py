@@ -12,3 +12,17 @@ class Country(models.Model):
     class Meta:
            verbose_name = "Страна"
            verbose_name_plural = "Страны"
+
+
+class Article(models.Model):
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='articles')
+    title = models.CharField(max_length=200, verbose_name="Заголовок")
+    link = models.URLField(verbose_name="Ссылка на статью")
+    update = models.DateField(auto_now=True, verbose_name="Дата обновления")
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Статья"
+        verbose_name_plural = "Статьи"
