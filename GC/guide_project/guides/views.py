@@ -28,23 +28,6 @@ def country_create(request):
     
     return render(request, 'guides/country_create.html', {'form': form})
 
-# Редактирование страны
-def country_update(request, pk):
-    country = get_object_or_404(Country, pk=pk)
-    
-    if request.method == 'POST':
-        form = CountryForm(request.POST, request.FILES, instance=country)
-        if form.is_valid():
-            country = form.save()
-            messages.success(request, f'Трасса "{country.name}" успешно обновлена!')
-            return redirect('guides/home', pk=country.pk)
-    else:
-        form = CountryForm(instance=country)  
-    
-    return render(request, 'guides/country_create.html', {
-        'form': form, 'title': 'Редактировать страну'
-    })
-
 
 # Удаление страны
 def country_delete(request, pk):

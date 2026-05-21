@@ -1,4 +1,3 @@
-
 {% extends 'guides/base.html' %}
 {% load static %}
 
@@ -17,9 +16,11 @@
         </div>
 
         <div class="countries-grid">
+            {% for country in countries %}
             <div class="country-card">
                 {% if user.is_staff %}
                 <a class="btn-delete" onclick="document.getElementById('deleteModal{{ country.pk }}').style.display='flex'; return false;">🗑️</a>
+                {% endif %}
                 <div class="country-info">
                     <h5 class="country-name">{{ country.name }}</h5>
                     <p class="country-details">
@@ -49,5 +50,6 @@
             <p>Нет стран</p>
             {% endfor %}
         </div>
+    </div>
 </div>
 {% endblock %}

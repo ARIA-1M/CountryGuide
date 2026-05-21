@@ -16,8 +16,6 @@ urlpatterns = [
     path('country/', views.country_list, name='country_list'),
     # Добавление стран
     path('country/create/', views.country_create, name='country_create'),
-    # Редактирование стран
-    path('country/<int:pk>/update/', views.country_update, name='country_update'),
     # Удаление трассы
     path('country/<int:pk>/delete/', views.country_delete, name='country_delete'),
     # Добавление поездки с бюджетом

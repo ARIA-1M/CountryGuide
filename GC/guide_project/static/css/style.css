@@ -10,7 +10,7 @@
   --gradient-start: #E5E7EB; /* Начало градиента фона */
   --gradient-end: #67738C; /* Конец градиента фона */
   --footer-text: #1F2937; /* Цвет подвала и шапки  и основной цвет текста */
-  --divider-icon: #191C22; /* Дополнительный цвет для разделителей, иконок и второстепенных акцентов */
+  --divider-icon: #202122; /* Дополнительный цвет для разделителей, иконок и второстепенных акцентов */
   --shadow: 0 6px 8px rgba(17, 18, 24, 0.1); /* Тень */
   --border-radius: 8px; /* Закругление для элементов */
 }
@@ -115,6 +115,65 @@ body {
 @media (max-width: 576px) {
     .auth-card {
         max-width: 100%;
+    }
+}
+
+/* Главная страница */
+.content {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.text p {
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 1.4;
+    font-style: italic;
+    margin-bottom: 40px;
+    max-width: 600px;
+}
+
+.btn-start {
+    display: inline-block;
+    background: var(--gradient-end);
+    color: #ffffff;
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+    box-shadow: var(--shadow);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-start:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    filter: brightness(0.95);
+}
+
+@media (max-width: 768px) {
+    .text p {
+        font-size: 1.3rem;
+    }
+    
+    .btn-start {
+        padding: 10px 25px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .text p {
+        font-size: 1.1rem;
     }
 }
 
