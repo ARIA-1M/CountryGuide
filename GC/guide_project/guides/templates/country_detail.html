@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ country.name }} - статьи</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <h1>{{ country.name }}</h1>
+    <p><strong>Валюта:</strong> {{ country.currency }}</p>
+    <p><strong>Налог:</strong> {{ country.vat_rate }}%</p>
+    <p><strong>Язык:</strong> {{ country.language }}</p>
+
+    <h2>Статьи о стране</h2>
+    {% if articles %}
+        <ul>
+        {% for article in articles %}
+            <li>
+                <a href="{{ article.link }}" target="_blank">{{ article.title }}</a>
+                (обновлено: {{ article.update|date:"d.m.Y" }})
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Статей пока нет.</p>
+    {% endif %}
+
+    <p><a href="{% url 'guides:home' %}">На главную</a></p>
+</body>
+</html>
