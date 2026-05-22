@@ -1,7 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .forms import CountryForm
+
 from .models import Country, Article, LocalApp, PhraseCategory, Phrase
+
+from .forms import TripBudgetForm
+from .models import Country
+from .forms import UsersForm
+
 
 
 def home(request):
@@ -31,12 +37,25 @@ def country_detail(request, country_id):
     }) 
 
 
+
 def articles_list(request):
     countries = Country.objects.all()
     selected_country_id = request.GET.get('country_id')
     articles = None
     apps = None
     selected_country = None
+
+# Создание поездки
+def trip_create(request):
+    if request.method == 'POST':
+        form = TripBudgetForm(request.POST)
+        if form.is_valid():
+            trip = form.save(user=request.user)
+            messages.success(request, f'Поездка в {trip.сountry.name} успешно создана!')
+            return redirect('guides:home')
+    else:
+        form = TripBudgetForm()
+
     
     if selected_country_id:
         selected_country = get_object_or_404(Country, id=selected_country_id)
