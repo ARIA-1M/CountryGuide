@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Статьи о странах</title>
+    <meta charset="utf-8">
+</head>
+<body>
+
+<h1>Статьи о странах</h1>
+
+<form method="get">
+    <label for="country_id">Выберите страну:</label>
+    <select name="country_id" id="country_id" onchange="this.form.submit()">
+        <option value="">-- Выберите страну --</option>
+        {% for country in countries %}
+            <option value="{{ country.id }}" {% if selected_country_id|stringformat:"s" == country.id|stringformat:"s" %}selected{% endif %}>
+                {{ country.name }}
+            </option>
+        {% endfor %}
+    </select>
+</form>
+
+{% if selected_country %}
+    <h2>{{ selected_country.name }}</h2>
+{% endif %}
+
+{% if articles %}
+    <ul>
+        {% for article in articles %}
+            <li>
+                <a href="{{ article.link }}" target="_blank">{{ article.title }}</a>
+                (обновлено: {{ article.update|date:"d.m.Y" }})
+            </li>
+        {% endfor %}
+    </ul>
+{% elif selected_country %}
+    <p>Для этой страны пока нет статей.</p>
+{% endif %}
+
+<p><a href="{% url 'guides:home' %}">На главную</a></p>
+
+</body>
+</html>

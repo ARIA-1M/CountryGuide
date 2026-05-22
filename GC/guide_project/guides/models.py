@@ -26,3 +26,18 @@ class Article(models.Model):
     class Meta:
         verbose_name = "Статья"
         verbose_name_plural = "Статьи"
+
+from django.db import models
+
+class LocalApp(models.Model):
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='apps')
+    title = models.CharField(max_length=200, verbose_name="Название приложения")
+    description = models.TextField(verbose_name="Описание")
+    logo = models.ImageField(upload_to='apps_logos/', blank=True, null=True, verbose_name="Логотип")
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Приложение"
+        verbose_name_plural = "Приложения"

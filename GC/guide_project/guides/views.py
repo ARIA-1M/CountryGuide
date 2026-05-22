@@ -26,4 +26,43 @@ def country_detail(request, country_id):
     return render(request, 'guides/country_detail.html', {
         'country': country,
         'articles': articles,
-    })    
+    }) 
+
+
+def articles_list(request):
+    countries = Country.objects.all()
+    selected_country_id = request.GET.get('country_id')
+    articles = None
+    
+    if selected_country_id:
+        selected_country = get_object_or_404(Country, id=selected_country_id)
+        articles = selected_country.articles.all().order_by('-update')
+    else:
+        selected_country = None
+    
+    return render(request, 'guides/articles_list.html', {
+        'countries': countries,
+        'selected_country_id': int(selected_country_id) if selected_country_id else None,
+        'articles': articles,
+        'selected_country': selected_country,
+    })
+
+def articles_list(request):
+    countries = Country.objects.all()
+    selected_country_id = request.GET.get('country_id')
+    articles = None
+    apps = None
+    selected_country = None
+    
+    if selected_country_id:
+        selected_country = get_object_or_404(Country, id=selected_country_id)
+        articles = selected_country.articles.all().order_by('-update')
+        apps = selected_country.apps.all()  # добавляем приложения
+    
+    return render(request, 'guides/articles_list.html', {
+        'countries': countries,
+        'selected_country_id': selected_country_id,
+        'articles': articles,
+        'apps': apps,
+        'selected_country': selected_country,
+    })
