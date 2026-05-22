@@ -127,6 +127,7 @@ body {
     align-items: center;
     text-align: center;
     padding: 20px;
+    z-index: 1000;
 }
 
 .text p {
@@ -243,6 +244,63 @@ body {
     padding: 0;
     text-align: left;
 }
+
+/* Слайдер */
+.slider-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.slider {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Затемнение поверх всего слайдера */
+.slider-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.content {
+    position: relative;
+    z-index: 2;
+    color: white;
+}
+
+
 
 /* Адаптив главной страницы и подвала и шапки */
 @media (max-width: 1200px) {

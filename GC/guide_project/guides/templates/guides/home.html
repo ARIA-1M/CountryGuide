@@ -3,6 +3,18 @@
 {% block title %}Главная - ГПС{% endblock %}
 
 {% block content %}
+<div class="slider-container">
+    <div class="slider">
+        <div class="slide active"> <img src="{% static 'img/slide1.png' %}" alt="F1"></div>
+        <div class="slide"><img src="{% static 'img/slide2.png' %}" alt="F1"></div>
+        <div class="slide"><img src="{% static 'img/slide3.png' %}" alt="F1"></div>
+        <div class="slide"><img src="{% static 'img/slide4.jpg' %}" alt="F1"></div>
+        <div class="slide"><img src="{% static 'img/slide5.jpg' %}" alt="F1"></div>
+    </div>
+</div>
+
+<div class="slider-overlay"></div>
+
 <div class="content">
     <div class="text"><p>У настоящего путешественника нет определённого плана и намерения куда-либо приехать</p></div>
     <div class="mt-3">
