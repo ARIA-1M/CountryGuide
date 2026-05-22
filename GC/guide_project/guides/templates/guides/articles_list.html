@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Статьи о странах</title>
-    <meta charset="utf-8">
-</head>
-<body>
 
-<h1>Статьи о странах</h1>
+{% extends 'guides/base.html' %}
+{% load static %}
+
+{% block title %}ГПС - Статьи и приложения{% endblock %}
+
+{% block content %}
+
+<h3>Статьи о странах</h1>
 
 <form method="get">
     <label for="country_id">Выберите страну:</label>
@@ -37,7 +37,23 @@
     <p>Для этой страны пока нет статей.</p>
 {% endif %}
 
-<p><a href="{% url 'guides:home' %}">На главную</a></p>
+<h3>Полезные приложения</h3>
+{% if apps %}
+    <ul>
+        {% for app in apps %}
+            <li>
+                {% if app.logo %}
+                    <img src="{{ app.logo.url }}" alt="{{ app.title }}" width="50" height="50">
+                {% endif %}
+                <strong>{{ app.title }}</strong><br>
+                {{ app.description }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Приложений пока нет.</p>
+{% endif %}
 
-</body>
-</html>
+
+{% endblock %}
+
