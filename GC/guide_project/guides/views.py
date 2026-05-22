@@ -22,7 +22,7 @@ def country_create(request):
         print(form.errors)  
         if form.is_valid():
             form.save()
-            return redirect('guides/home')
+            return redirect('/country/')
     else:
         form = CountryForm()
     
@@ -37,7 +37,7 @@ def country_delete(request, pk):
         country_name = country.name
         country.delete()
         messages.success(request, f'Трасса "{country_name}" удалена!')
-        return redirect('guides/home')
+        return redirect('/country/')
     
     return render(request, 'guides/country_confirm_delete.html', {'country': country})
 

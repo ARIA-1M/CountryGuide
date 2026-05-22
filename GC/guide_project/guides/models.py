@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Модель страны
 class Country(models.Model):
     name = models.CharField(max_length=100,verbose_name="Название страны")
-    currency = models.CharField(max_length=100,verbose_name="Название ваоюты")
+    currency = models.CharField(max_length=100,verbose_name="Название валюты")
     vat_rate = models.DecimalField(max_digits=3,decimal_places=2,verbose_name="Налог (%)")
     language = models.CharField(max_length=100,verbose_name="Язык")
    

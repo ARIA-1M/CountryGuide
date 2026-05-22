@@ -8,19 +8,16 @@
     <div class="container">
         <div class="countries-header">
             <h1 class="countries-title">Страны мира</h1>
-            {% if user.is_staff %}
             <a href="{% url 'guides:country_create' %}" class="btn-primary">
                 + Добавить страну
             </a>
-            {% endif %}
         </div>
 
         <div class="countries-grid">
             {% for country in countries %}
             <div class="country-card">
-                {% if user.is_staff %}
                 <a class="btn-delete" onclick="document.getElementById('deleteModal{{ country.pk }}').style.display='flex'; return false;">🗑️</a>
-                {% endif %}
+
                 <div class="country-info">
                     <h5 class="country-name">{{ country.name }}</h5>
                     <p class="country-details">
@@ -31,7 +28,6 @@
                 </div>
             </div>
 
-            {% if user.is_staff %}
             <div id="deleteModal{{ country.pk }}" class="modal">
                 <div class="modal-content">
                     <h3>Подтверждение удаления</h3>
@@ -45,7 +41,6 @@
                     </div>
                 </div>
             </div>
-            {% endif %}
             {% empty %}
             <p>Нет стран</p>
             {% endfor %}
