@@ -326,7 +326,7 @@ body {
 
 /* Карточка добавление*/
 .container-py-4{
-    width: 900px;
+    max-width: 900px;
     margin: 0px auto;
     padding: 20px;
 }
@@ -414,6 +414,17 @@ input, textarea, select {
 
 .btn-secondary:hover {
     background: #4b5467;
+}
+
+.alert-info {
+    background: #f0f7ff;
+    border: 2px solid var(--footer-text);
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin: 10px 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #1a1a2e;
 }
 
 /* Адаптив для карточки добавления*/
@@ -506,7 +517,7 @@ input, textarea, select {
     }
 }
 
-/*  */
+/* Странница лист объектов */
 .countries-header {
     display: flex;
     justify-content: space-between;

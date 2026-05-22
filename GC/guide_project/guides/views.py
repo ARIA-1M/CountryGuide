@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import CountryForm
+from .forms import TripBudgetForm
 from .models import Country
 from .forms import UsersForm
 
@@ -63,7 +64,7 @@ def trip_create(request):
         if form.is_valid():
             trip = form.save(user=request.user)
             messages.success(request, f'Поездка в {trip.сountry.name} успешно создана!')
-            return redirect('guides:trip_list')
+            return redirect('guides:home')
     else:
         form = TripBudgetForm()
     
