@@ -41,3 +41,29 @@ class LocalApp(models.Model):
     class Meta:
         verbose_name = "Приложение"
         verbose_name_plural = "Приложения"
+
+class PhraseCategory(models.Model):
+    title = models.CharField(max_length=100, verbose_name="Название категории")
+    update = models.DateField(auto_now=True, verbose_name="Дата обновления")
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Категория фраз"
+        verbose_name_plural = "Категории фраз"
+
+
+class Phrase(models.Model):
+    category = models.ForeignKey(PhraseCategory, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Категория")
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, verbose_name="Страна")
+    original_text = models.CharField(max_length=255, verbose_name="Оригинал")
+    translated_text = models.CharField(max_length=255, verbose_name="Перевод")
+    transliteration = models.CharField(max_length=255, blank=True, verbose_name="Транслитерация")
+
+    def __str__(self):
+        return self.original_text
+
+    class Meta:
+        verbose_name = "Фраза"
+        verbose_name_plural = "Фразы"

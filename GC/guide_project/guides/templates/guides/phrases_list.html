@@ -1,0 +1,66 @@
+
+{% extends 'guides/base.html' %}
+{% load static %}
+
+{% block title %}ГПС - Статьи и приложения{% endblock %}
+
+{% block content %}
+
+<h1>Разговорник</h1>
+
+<!-- Шаг 1: Выбор страны -->
+<form method="get" id="country-form">
+    <label for="country_id">Выберите страну:</label>
+    <select name="country_id" id="country_id" onchange="this.form.submit()">
+        <option value="">-- Выберите страну --</option>
+        {% for country in countries %}
+            <option value="{{ country.id }}" {% if selected_country_id|stringformat:"s" == country.id|stringformat:"s" %}selected{% endif %}>
+                {{ country.name }}
+            </option>
+        {% endfor %}
+    </select>
+</form>
+
+{% if selected_country %}
+    <h2>{{ selected_country.name }}</h2>
+    
+    <!-- Шаг 2: Выбор категории (показывается только если есть категории) -->
+    {% if categories %}
+        <form method="get" id="category-form">
+            <input type="hidden" name="country_id" value="{{ selected_country.id }}">
+            <label for="category_id">Выберите категорию:</label>
+            <select name="category_id" id="category_id" onchange="this.form.submit()">
+                <option value="">-- Выберите категорию --</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if selected_category_id|stringformat:"s" == category.id|stringformat:"s" %}selected{% endif %}>
+                        {{ category.title }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+    {% else %}
+        <p>Для этой страны пока нет фраз.</p>
+    {% endif %}
+    
+    <!-- Шаг 3: Показ фраз выбранной категории -->
+    {% if selected_category and phrases %}
+        <h3>{{ selected_category.title }}</h3>
+        <ul>
+            {% for phrase in phrases %}
+                <li>
+                    <strong>{{ phrase.original_text }}</strong><br>
+                    {{ phrase.translated_text }}<br>
+                    {% if phrase.transliteration %}
+                        <em>({{ phrase.transliteration }})</em>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% elif selected_category and not phrases %}
+        <p>В этой категории пока нет фраз для данной страны.</p>
+    {% endif %}
+    
+{% endif %}
+
+{% endblock %}
+
