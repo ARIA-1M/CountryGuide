@@ -5,13 +5,13 @@
 
 {% block content %}
 
-<!-- Кнопки добавления (видны только админу) -->
-{% if user.is_staff or user.is_superuser %}
+<!-- Кнопки добавления -->
+
 <div class="admin-buttons" style="margin-bottom: 20px;">
     <a href="{% url 'guides:article_create' %}" style="background: #4CAF50; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-right: 10px;">+ Добавить статью</a>
     <a href="{% url 'guides:app_create' %}" style="background: #4CAF50; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px;">+ Добавить приложение</a>
 </div>
-{% endif %}
+
 
 <h3>Статьи о странах</h3>
 

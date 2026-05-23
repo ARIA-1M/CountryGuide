@@ -1,12 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import CountryForm
 from .models import Country, Article, LocalApp, PhraseCategory, Phrase
-
-
-def is_admin(user):
-    return user.is_staff or user.is_superuser
 
 
 def home(request):
@@ -88,10 +83,8 @@ def phrases_list(request):
     })
 
 
-#  CRUD для статей 
+# ==================== CRUD для статей ====================
 
-@login_required
-@user_passes_test(is_admin)
 def article_create(request):
     if request.method == 'POST':
         country_id = request.POST.get('country_id')
@@ -106,8 +99,6 @@ def article_create(request):
     return render(request, 'guides/article_form.html', {'countries': countries, 'mode': 'create'})
 
 
-@login_required
-@user_passes_test(is_admin)
 def article_edit(request, article_id):
     article = get_object_or_404(Article, id=article_id)
     if request.method == 'POST':
@@ -125,8 +116,6 @@ def article_edit(request, article_id):
     })
 
 
-@login_required
-@user_passes_test(is_admin)
 def article_delete(request, article_id):
     article = get_object_or_404(Article, id=article_id)
     if request.method == 'POST':
@@ -136,10 +125,8 @@ def article_delete(request, article_id):
     return render(request, 'guides/confirm_delete.html', {'object': article, 'type': 'статью'})
 
 
-#  CRUD для приложений 
+# ==================== CRUD для приложений ====================
 
-@login_required
-@user_passes_test(is_admin)
 def app_create(request):
     if request.method == 'POST':
         country_id = request.POST.get('country_id')
@@ -155,8 +142,6 @@ def app_create(request):
     return render(request, 'guides/app_form.html', {'countries': countries, 'mode': 'create'})
 
 
-@login_required
-@user_passes_test(is_admin)
 def app_edit(request, app_id):
     app = get_object_or_404(LocalApp, id=app_id)
     if request.method == 'POST':
@@ -172,8 +157,6 @@ def app_edit(request, app_id):
     return render(request, 'guides/app_form.html', {'app': app, 'countries': countries, 'mode': 'edit'})
 
 
-@login_required
-@user_passes_test(is_admin)
 def app_delete(request, app_id):
     app = get_object_or_404(LocalApp, id=app_id)
     if request.method == 'POST':
@@ -183,10 +166,8 @@ def app_delete(request, app_id):
     return render(request, 'guides/confirm_delete.html', {'object': app, 'type': 'приложение'})
 
 
-#  CRUD для категорий фраз 
+# ==================== CRUD для категорий фраз ====================
 
-@login_required
-@user_passes_test(is_admin)
 def category_create(request):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -196,8 +177,6 @@ def category_create(request):
     return render(request, 'guides/category_form.html', {'mode': 'create'})
 
 
-@login_required
-@user_passes_test(is_admin)
 def category_edit(request, category_id):
     category = get_object_or_404(PhraseCategory, id=category_id)
     if request.method == 'POST':
@@ -208,8 +187,6 @@ def category_edit(request, category_id):
     return render(request, 'guides/category_form.html', {'category': category, 'mode': 'edit'})
 
 
-@login_required
-@user_passes_test(is_admin)
 def category_delete(request, category_id):
     category = get_object_or_404(PhraseCategory, id=category_id)
     if request.method == 'POST':
@@ -219,10 +196,8 @@ def category_delete(request, category_id):
     return render(request, 'guides/confirm_delete.html', {'object': category, 'type': 'категорию'})
 
 
-#  CRUD для фраз
+# ==================== CRUD для фраз ====================
 
-@login_required
-@user_passes_test(is_admin)
 def phrase_create(request):
     if request.method == 'POST':
         country_id = request.POST.get('country_id')
@@ -251,8 +226,6 @@ def phrase_create(request):
     })
 
 
-@login_required
-@user_passes_test(is_admin)
 def phrase_edit(request, phrase_id):
     phrase = get_object_or_404(Phrase, id=phrase_id)
     if request.method == 'POST':
@@ -273,8 +246,6 @@ def phrase_edit(request, phrase_id):
     })
 
 
-@login_required
-@user_passes_test(is_admin)
 def phrase_delete(request, phrase_id):
     phrase = get_object_or_404(Phrase, id=phrase_id)
     if request.method == 'POST':
