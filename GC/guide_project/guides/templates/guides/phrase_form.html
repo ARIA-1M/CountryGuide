@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if mode == 'create' %}Добавить{% else %}Редактировать{% endif %} фразу</title>
+</head>
+<body>
+    <h1>{% if mode == 'create' %}Добавить фразу{% else %}Редактировать фразу{% endif %}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label>Страна:</label>
+        <select name="country_id" required>
+            {% for country in countries %}
+                <option value="{{ country.id }}" {% if phrase and phrase.country.id == country.id %}selected{% endif %}>
+                    {{ country.name }}
+                </option>
+            {% endfor %}
+        </select><br>
+        <label>Категория:</label>
+        <select name="category_id" required>
+            {% for category in categories %}
+                <option value="{{ category.id }}" {% if phrase and phrase.category.id == category.id %}selected{% endif %}>
+                    {{ category.title }}
+                </option>
+            {% endfor %}
+        </select><br>
+        <label>Оригинал:</label>
+        <input type="text" name="original_text" value="{{ phrase.original_text|default:'' }}" required><br>
+        <label>Перевод:</label>
+        <input type="text" name="translated_text" value="{{ phrase.translated_text|default:'' }}" required><br>
+        <label>Транслитерация:</label>
+        <input type="text" name="transliteration" value="{{ phrase.transliteration|default:'' }}"><br>
+        <button type="submit">Сохранить</button>
+        <a href="{% url 'guides:phrases_list' %}">Отмена</a>
+    </form>
+</body>
+</html>

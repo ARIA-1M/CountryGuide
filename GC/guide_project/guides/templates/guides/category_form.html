@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if mode == 'create' %}Добавить{% else %}Редактировать{% endif %} категорию</title>
+</head>
+<body>
+    <h1>{% if mode == 'create' %}Добавить категорию{% else %}Редактировать категорию{% endif %}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label>Название категории:</label>
+        <input type="text" name="title" value="{{ category.title|default:'' }}" required><br>
+        <button type="submit">Сохранить</button>
+        <a href="{% url 'guides:phrases_list' %}">Отмена</a>
+    </form>
+</body>
+</html>

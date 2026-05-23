@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if mode == 'create' %}Добавить{% else %}Редактировать{% endif %} приложение</title>
+</head>
+<body>
+    <h1>{% if mode == 'create' %}Добавить приложение{% else %}Редактировать приложение{% endif %}</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Страна:</label>
+        <select name="country_id" required>
+            {% for country in countries %}
+                <option value="{{ country.id }}" {% if app and app.country.id == country.id %}selected{% endif %}>
+                    {{ country.name }}
+                </option>
+            {% endfor %}
+        </select><br>
+        <label>Название:</label>
+        <input type="text" name="title" value="{{ app.title|default:'' }}" required><br>
+        <label>Описание:</label>
+        <textarea name="description" required>{{ app.description|default:'' }}</textarea><br>
+        <label>Логотип:</label>
+        <input type="file" name="logo" accept="image/*"><br>
+        <button type="submit">Сохранить</button>
+        <a href="{% url 'guides:articles_list' %}">Отмена</a>
+    </form>
+</body>
+</html>

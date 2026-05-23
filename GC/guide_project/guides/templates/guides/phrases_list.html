@@ -1,10 +1,17 @@
-
 {% extends 'guides/base.html' %}
 {% load static %}
 
-{% block title %}ГПС - Статьи и приложения{% endblock %}
+{% block title %}ГПС - Разговорник{% endblock %}
 
 {% block content %}
+
+<!-- Кнопки добавления (видны только админу) -->
+{% if user.is_staff or user.is_superuser %}
+<div class="admin-buttons" style="margin-bottom: 20px;">
+    <a href="{% url 'guides:category_create' %}" style="background: #4CAF50; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-right: 10px;">+ Добавить категорию</a>
+    <a href="{% url 'guides:phrase_create' %}" style="background: #4CAF50; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px;">+ Добавить фразу</a>
+</div>
+{% endif %}
 
 <h1>Разговорник</h1>
 
@@ -24,7 +31,7 @@
 {% if selected_country %}
     <h2>{{ selected_country.name }}</h2>
     
-    <!-- Шаг 2: Выбор категории (показывается только если есть категории) -->
+    <!-- Шаг 2: Выбор категории -->
     {% if categories %}
         <form method="get" id="category-form">
             <input type="hidden" name="country_id" value="{{ selected_country.id }}">
@@ -38,11 +45,24 @@
                 {% endfor %}
             </select>
         </form>
+
+        <!-- Управление категориями (только для админа) -->
+        {% if user.is_staff or user.is_superuser %}
+            <div style="margin: 10px 0;">
+                {% for category in categories %}
+                    <span style="margin-right: 15px;">
+                        {{ category.title }}
+                        <a href="{% url 'guides:category_edit' category.id %}" style="color: blue; text-decoration: none; margin-left: 5px;">✏️</a>
+                        <a href="{% url 'guides:category_delete' category.id %}" style="color: red; text-decoration: none;" onclick="return confirm('Удалить категорию? Все фразы в ней потеряют привязку!')">❌</a>
+                    </span>
+                {% endfor %}
+            </div>
+        {% endif %}
     {% else %}
         <p>Для этой страны пока нет фраз.</p>
     {% endif %}
     
-    <!-- Шаг 3: Показ фраз выбранной категории -->
+    <!-- Шаг 3: Показ фраз -->
     {% if selected_category and phrases %}
         <h3>{{ selected_category.title }}</h3>
         <ul>
@@ -53,7 +73,15 @@
                     {% if phrase.transliteration %}
                         <em>({{ phrase.transliteration }})</em>
                     {% endif %}
+                    <!-- Кнопки редактирования/удаления фразы (только для админа) -->
+                    {% if user.is_staff or user.is_superuser %}
+                        <span style="margin-top: 5px; display: inline-block;">
+                            <a href="{% url 'guides:phrase_edit' phrase.id %}" style="color: blue; text-decoration: none; margin-right: 5px;">✏️ Редактировать</a>
+                            <a href="{% url 'guides:phrase_delete' phrase.id %}" style="color: red; text-decoration: none;" onclick="return confirm('Удалить фразу?')">❌ Удалить</a>
+                        </span>
+                    {% endif %}
                 </li>
+                <hr>
             {% endfor %}
         </ul>
     {% elif selected_category and not phrases %}
@@ -62,5 +90,6 @@
     
 {% endif %}
 
-{% endblock %}
+<p><a href="{% url 'guides:home' %}">На главную</a></p>
 
+{% endblock %}

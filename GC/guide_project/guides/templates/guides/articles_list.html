@@ -1,4 +1,3 @@
-
 {% extends 'guides/base.html' %}
 {% load static %}
 
@@ -6,7 +5,15 @@
 
 {% block content %}
 
-<h3>Статьи о странах</h1>
+<!-- Кнопки добавления (видны только админу) -->
+{% if user.is_staff or user.is_superuser %}
+<div class="admin-buttons" style="margin-bottom: 20px;">
+    <a href="{% url 'guides:article_create' %}" style="background: #4CAF50; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-right: 10px;">+ Добавить статью</a>
+    <a href="{% url 'guides:app_create' %}" style="background: #4CAF50; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px;">+ Добавить приложение</a>
+</div>
+{% endif %}
+
+<h3>Статьи о странах</h3>
 
 <form method="get">
     <label for="country_id">Выберите страну:</label>
@@ -30,6 +37,13 @@
             <li>
                 <a href="{{ article.link }}" target="_blank">{{ article.title }}</a>
                 (обновлено: {{ article.update|date:"d.m.Y" }})
+                <!-- Кнопки редактирования/удаления статьи (видны только админу) -->
+                {% if user.is_staff or user.is_superuser %}
+                    <span style="margin-left: 10px;">
+                        <a href="{% url 'guides:article_edit' article.id %}" style="color: blue; text-decoration: none; margin-right: 5px;">✏️</a>
+                        <a href="{% url 'guides:article_delete' article.id %}" style="color: red; text-decoration: none;" onclick="return confirm('Удалить статью?')">❌</a>
+                    </span>
+                {% endif %}
             </li>
         {% endfor %}
     </ul>
@@ -41,12 +55,21 @@
 {% if apps %}
     <ul>
         {% for app in apps %}
-            <li>
+            <li style="margin-bottom: 15px;">
                 {% if app.logo %}
-                    <img src="{{ app.logo.url }}" alt="{{ app.title }}" width="50" height="50">
+                    <img src="{{ app.logo.url }}" alt="{{ app.title }}" width="50" height="50" style="vertical-align: middle;">
                 {% endif %}
-                <strong>{{ app.title }}</strong><br>
-                {{ app.description }}
+                <div style="display: inline-block; margin-left: 10px;">
+                    <strong>{{ app.title }}</strong><br>
+                    {{ app.description }}
+                </div>
+                <!-- Кнопки редактирования/удаления приложения (видны только админу) -->
+                {% if user.is_staff or user.is_superuser %}
+                    <span style="margin-left: 10px;">
+                        <a href="{% url 'guides:app_edit' app.id %}" style="color: blue; text-decoration: none; margin-right: 5px;">✏️</a>
+                        <a href="{% url 'guides:app_delete' app.id %}" style="color: red; text-decoration: none;" onclick="return confirm('Удалить приложение?')">❌</a>
+                    </span>
+                {% endif %}
             </li>
         {% endfor %}
     </ul>
@@ -54,6 +77,4 @@
     <p>Приложений пока нет.</p>
 {% endif %}
 
-
 {% endblock %}
-
