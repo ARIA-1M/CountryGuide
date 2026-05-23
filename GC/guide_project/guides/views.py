@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import CountryForm
+from .forms import TripBudgetForm
 from .models import Country
 from .forms import UsersForm
 
@@ -10,6 +11,11 @@ from .forms import UsersForm
 def home(request):
     return render(request, 'guides/home.html')
 
+# Список стран
+def country_list(request):
+    countries = Country.objects.all()
+    return render(request, 'guides/country_list.html', {'countries': countries})
+
 # Добавление новой страны 
 def country_create(request):
     if request.method == 'POST':
@@ -17,28 +23,11 @@ def country_create(request):
         print(form.errors)  
         if form.is_valid():
             form.save()
-            return redirect('guides/home')
+            return redirect('/country/')
     else:
         form = CountryForm()
     
     return render(request, 'guides/country_create.html', {'form': form})
-
-# Редактирование страны
-def country_update(request, pk):
-    country = get_object_or_404(Country, pk=pk)
-    
-    if request.method == 'POST':
-        form = CountryForm(request.POST, request.FILES, instance=country)
-        if form.is_valid():
-            country = form.save()
-            messages.success(request, f'Трасса "{country.name}" успешно обновлена!')
-            return redirect('guides/home', pk=country.pk)
-    else:
-        form = CountryForm(instance=country)  
-    
-    return render(request, 'guides/country_create.html', {
-        'form': form, 'title': 'Редактировать страну'
-    })
 
 
 # Удаление страны
@@ -49,7 +38,7 @@ def country_delete(request, pk):
         country_name = country.name
         country.delete()
         messages.success(request, f'Трасса "{country_name}" удалена!')
-        return redirect('guides/home')
+        return redirect('/country/')
     
     return render(request, 'guides/country_confirm_delete.html', {'country': country})
 
@@ -67,3 +56,16 @@ def register(request):
         form = UsersForm()
     
     return render(request, 'guides/register.html', {'form': form})
+
+# Создание поездки
+def trip_create(request):
+    if request.method == 'POST':
+        form = TripBudgetForm(request.POST)
+        if form.is_valid():
+            trip = form.save(user=request.user)
+            messages.success(request, f'Поездка в {trip.сountry.name} успешно создана!')
+            return redirect('guides:home')
+    else:
+        form = TripBudgetForm()
+    
+    return render(request, 'guides/trip_create.html', {'form': form, 'title': 'Создать поездку'})

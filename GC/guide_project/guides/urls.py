@@ -12,6 +12,12 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     # Главная стараница
     path('home/', views.home, name='home'),
+    # Список стран
+    path('country/', views.country_list, name='country_list'),
     # Добавление стран
-    path('country_create/', views.country_create, name='country_create'),
+    path('country/create/', views.country_create, name='country_create'),
+    # Удаление трассы
+    path('country/<int:pk>/delete/', views.country_delete, name='country_delete'),
+    # Добавление поездки с бюджетом
+    path('trip/create/', views.trip_create, name='trip_create'),
 ]
