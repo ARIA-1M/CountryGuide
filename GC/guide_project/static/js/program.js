@@ -72,3 +72,204 @@ document.addEventListener('DOMContentLoaded', function() {
     amount.addEventListener('input', updateBudgetInfo);
     dailyLimit.addEventListener('input', updateBudgetInfo);
 });
+
+document.getElementById('progressFill').style.width = '{{ budget.spent_percent }}%';
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Получаем данные из HTML
+    const totalBudgetEl = document.getElementById('totalBudget');
+    const spentAmountEl = document.getElementById('spentAmount');
+    const remainingAmountEl = document.getElementById('remainingAmount');
+    const expenseInput = document.getElementById('expenseAmount');
+    const includeTaxCheck = document.getElementById('includeTax');
+    const taxAmountField = document.getElementById('taxAmountField');
+    const amountWithTaxSpan = document.getElementById('amountWithTax');
+    const rubAmountInput = document.getElementById('rubAmount');
+    const applyBtn = document.getElementById('applyExpenseBtn');
+    const completeTripBtn = document.getElementById('completeTripBtn');
+    const progressFill = document.getElementById('progressFill');
+    const progressPercent = document.querySelector('.progress-percent');
+    const taxRateSpan = document.getElementById('taxRate');
+    const tripIdInput = document.getElementById('tripId');
+    const currencyCodeSpan = document.getElementById('currencyCode');
+    
+    // Переменные
+    let totalBudget = parseFloat(totalBudgetEl?.getAttribute('data-value') || 0);
+    let currentSpent = parseFloat(spentAmountEl?.getAttribute('data-value') || 0);
+    let taxRate = parseFloat(taxRateSpan?.textContent || 0);
+    let currencyCode = currencyCodeSpan?.textContent || 'RUB';
+    let exchangeRate = 90;
+    
+    // Функция обновления цвета остатка
+    function updateRemainingColor(remaining) {
+        const remainingSpan = document.getElementById('remainingAmount');
+        if (!remainingSpan) return;
+        
+        if (remaining < totalBudget * 0.2) {
+            remainingSpan.style.color = '#dc3545';
+            remainingSpan.className = 'stat-value remaining-critical';
+        } else if (remaining < totalBudget * 0.5) {
+            remainingSpan.style.color = '#ffc107';
+            remainingSpan.className = 'stat-value remaining-moderate';
+        } else {
+            remainingSpan.style.color = '#28a745';
+            remainingSpan.className = 'stat-value remaining-good';
+        }
+        
+        // Обновляем прогресс-бар
+        const percent = ((totalBudget - remaining) / totalBudget) * 100;
+        if (progressFill) {
+            progressFill.style.width = percent + '%';
+            progressFill.style.background = percent > 80 ? '#dc3545' : (percent > 50 ? '#ffc107' : '#28a745');
+        }
+        if (progressPercent) progressPercent.textContent = Math.round(percent) + '%';
+    }
+    
+    // Получение курса валюты
+    async function getExchangeRate() {
+        if (currencyCode === 'RUB') {
+            exchangeRate = 1;
+            return;
+        }
+        
+        try {
+            const response = await fetch(`https://open.er-api.com/v6/latest/${currencyCode}`);
+            const data = await response.json();
+            exchangeRate = data.rates.RUB;
+            console.log(`Курс 1 ${currencyCode} = ${exchangeRate} RUB`);
+        } catch (error) {
+            console.error('Ошибка получения курса:', error);
+            exchangeRate = 90;
+        }
+    }
+    
+    // Расчёт суммы с налогом и в рублях
+    function calculateRub() {
+        let amount = parseFloat(expenseInput?.value) || 0;
+        let includeTax = includeTaxCheck?.checked || false;
+        
+        if (includeTax && taxAmountField && amountWithTaxSpan) {
+            let withTax = amount * (1 + taxRate / 100);
+            amountWithTaxSpan.value = withTax.toFixed(2) + ' ' + currencyCode;
+            taxAmountField.style.display = 'block';
+            amount = withTax;
+        } else if (taxAmountField) {
+            taxAmountField.style.display = 'none';
+        }
+        
+        let rubAmount = amount * exchangeRate;
+        if (rubAmountInput) rubAmountInput.value = rubAmount.toFixed(2) + ' ₽';
+        if (applyBtn) applyBtn.disabled = !amount;
+    }
+    
+    // Добавление расхода
+    async function addExpense() {
+        let rubAmount = parseFloat(rubAmountInput?.value) || 0;
+        let localAmount = parseFloat(expenseInput?.value) || 0;
+        let includeTax = includeTaxCheck?.checked || false;
+        
+        if (rubAmount <= 0) return;
+        
+        let newSpent = currentSpent + rubAmount;
+        
+        if (newSpent > totalBudget) {
+            if (!confirm('⚠️ Внимание! Расход превышает бюджет! Продолжить?')) return;
+        }
+        
+        try {
+            const response = await fetch(`/trip/${tripIdInput?.value}/add-expense/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCsrfToken()
+                },
+                body: JSON.stringify({
+                    amount_local: localAmount,
+                    amount_rub: rubAmount,
+                    include_tax: includeTax
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                currentSpent = data.new_spent;
+                let remaining = totalBudget - currentSpent;
+                
+                if (spentAmountEl) spentAmountEl.textContent = currentSpent.toFixed(2) + ' ₽';
+                if (remainingAmountEl) remainingAmountEl.textContent = remaining.toFixed(2) + ' ₽';
+                
+                updateRemainingColor(remaining);
+                
+                // Очистка формы
+                if (expenseInput) expenseInput.value = '';
+                if (rubAmountInput) rubAmountInput.value = '';
+                if (applyBtn) applyBtn.disabled = true;
+                if (taxAmountField) taxAmountField.style.display = 'none';
+                if (includeTaxCheck) includeTaxCheck.checked = false;
+                
+                alert(`Расход ${rubAmount.toFixed(2)} ₽ добавлен!`);
+            } else {
+                alert('Ошибка: ' + data.error);
+            }
+        } catch (error) {
+            console.error('Ошибка:', error);
+            alert('Ошибка при добавлении расхода');
+        }
+    }
+    
+    // Завершение поездки
+    async function completeTrip() {
+        if (!confirm('Завершить поездку?')) return;
+        
+        try {
+            const response = await fetch(`/trip/${tripIdInput?.value}/complete/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCsrfToken()
+                }
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                alert('Поездка завершена!');
+                window.location.href = '/';
+            } else {
+                alert('Ошибка: ' + data.error);
+            }
+        } catch (error) {
+            console.error('Ошибка:', error);
+            alert('Ошибка при завершении поездки');
+        }
+    }
+    
+    // Получение CSRF-токена
+    function getCsrfToken() {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, 10) === 'csrftoken=') {
+                    cookieValue = decodeURIComponent(cookie.substring(10));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    // Навешиваем обработчики
+    if (expenseInput) expenseInput.addEventListener('input', calculateRub);
+    if (includeTaxCheck) includeTaxCheck.addEventListener('change', calculateRub);
+    if (applyBtn) applyBtn.addEventListener('click', addExpense);
+    if (completeTripBtn) completeTripBtn.addEventListener('click', completeTrip);
+    
+    // Инициализация
+    getExchangeRate().then(() => {
+        calculateRub();
+        updateRemainingColor(totalBudget - currentSpent);
+    });
+});

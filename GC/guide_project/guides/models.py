@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Модель страны
 class Country(models.Model):
     name = models.CharField(max_length=100,verbose_name="Название страны")
-    currency = models.CharField(max_length=100,verbose_name="Название валюты")
+    currency = models.CharField(max_length=100,verbose_name="Код валюты")
     vat_rate = models.DecimalField(max_digits=3,decimal_places=2,verbose_name="Налог (%)")
     language = models.CharField(max_length=100,verbose_name="Язык")
    
@@ -20,6 +20,7 @@ class Trip(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE, verbose_name="Пользователь")
     start_date = models.DateField(verbose_name="Дата начала поездки")
     end_date = models.DateField(verbose_name="Дата окончания поездки")
+    is_active = models.BooleanField(default=True)
    
     def __str__(self):
             return f"{self.сountry.name} - {self.start_date}"  
@@ -28,16 +29,26 @@ class Trip(models.Model):
            verbose_name_plural = "Поездки"
 
 
-# Модель бюджета
 class Budget(models.Model):
-    trip = models.ForeignKey(Trip,on_delete=models.CASCADE, related_name='trip',verbose_name="Поездка")
-    amount = models.DecimalField(max_digits=3,decimal_places=2,verbose_name="Бюджет")
-    daily_limit = models.DecimalField(max_digits=3,decimal_places=2,verbose_name="Лимит на день")
-    threshold_limit = models.BooleanField(verbose_name="Наличие пороговых уведомлений")    
-    spent = models.DecimalField(max_digits=3,decimal_places=2,verbose_name="Расход")
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name='budgets', verbose_name="Поездка")
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="Бюджет")
+    daily_limit = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="Лимит на день")
+    threshold_limit = models.BooleanField(default=False, verbose_name="Наличие пороговых уведомлений")    
+    spent = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="Расход")
    
     def __str__(self):
-            return self.amount   
+        return f"Бюджет поездки: {self.amount}"
+    
+    @property
+    def remaining(self):
+        return self.amount - self.spent
+    
+    @property
+    def spent_percent(self):
+        if self.amount > 0:
+            return int((self.spent / self.amount) * 100)
+        return 0
+    
     class Meta:
-           verbose_name = "Бюджет"
-           verbose_name_plural = "Бюджеты"
+        verbose_name = "Бюджет"
+        verbose_name_plural = "Бюджеты"

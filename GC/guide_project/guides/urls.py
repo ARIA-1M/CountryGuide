@@ -20,4 +20,11 @@ urlpatterns = [
     path('country/<int:pk>/delete/', views.country_delete, name='country_delete'),
     # Добавление поездки с бюджетом
     path('trip/create/', views.trip_create, name='trip_create'),
+    # Добавление поездки
+    path('budget/', views.latest_budget, name='budget'),
+    path('trip/<int:trip_id>/budget/', views.trip_budget, name='trip_budget'),
+    path('trip/<int:trip_id>/complete/', views.complete_trip, name='complete_trip'),
+    path('trip/<int:trip_id>/add-expense/', views.api_add_expense, name='api_add_expense'),
+    path('trip/<int:trip_id>/complete/', views.api_complete_trip, name='api_complete_trip'),
+    
 ]

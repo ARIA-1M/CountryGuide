@@ -1,0 +1,78 @@
+{% extends 'guides/base.html' %}
+{% load static %}
+
+{% block title %}ГПС - Бюджет поездки{% endblock %}
+
+{% block content %}
+<div class="budget-container">
+    <div class="budget-card">
+        <div class="budget-card-header">
+            <h4>Бюджет поездки: {{ trip.country.name }}</h4>
+            <p class="trip-dates">{{ trip.start_date|date:"d.m.Y" }} - {{ trip.end_date|date:"d.m.Y" }}</p>
+        </div>
+        
+        <div class="budget-card-body">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-label">Общий бюджет</span>
+                    <span class="stat-value" id="totalBudget" data-value="{{ budget.amount }}">{{ budget.amount|floatformat:2 }} ₽</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Потрачено</span>
+                    <span class="stat-value text-danger" id="spentAmount" data-value="{{ budget.spent }}">{{ budget.spent|floatformat:2 }} ₽</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Осталось</span>
+                    <span class="stat-value" id="remainingAmount">{{ budget.remaining|floatformat:2 }} ₽</span>
+                </div>
+            </div>
+            
+            <div class="progress-wrapper">
+                <div class="progress-bar-container">
+                   <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span class="progress-percent">{{ budget.spent_percent }}%</span>
+            </div>
+            
+            <hr class="divider">
+            
+            <h5 class="section-title">Добавить расход</h5>
+            <div class="expense-form">
+                <div class="form-field">
+                    <label>Сумма расхода (<span id="currencyCode">{{ trip.country.currency_code }}</span>)</label>
+                    <input type="number" id="expenseAmount" class="form-control" placeholder="Введите сумму" step="0.01">
+                </div>
+                
+                <div class="checkbox-field">
+                    <input type="checkbox" id="includeTax">
+                    <label for="includeTax">Включить налог (<span id="taxRate">{{ trip.country.vat_rate }}</span>%)</label>
+                </div>
+                
+                <div class="form-field" id="taxAmountField" style="display: none;">
+                    <label>Сумма с налогом</label>
+                    <input type="text" id="amountWithTax" class="form-control" readonly disabled>
+                </div>
+                
+                <div class="form-field">
+                    <label>Итого в рублях</label>
+                    <input type="text" id="rubAmount" class="form-control" readonly disabled placeholder="0 ₽">
+                </div>
+                
+                <button class="btn-apply" id="applyExpenseBtn" disabled> Применить расход</button>
+            </div>
+            
+            <hr class="divider">
+            
+            <div class="trip-actions">
+                <input type="hidden" id="tripId" value="{{ trip.id }}">
+                <button class="btn-complete" id="completeTripBtn"> Завершить поездку</button>
+                <div class="alert-completed" id="completedAlert" style="display: none;">Поездка завершена</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/budget.js' %}"></script>
+{% endblock %}
