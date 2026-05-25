@@ -8,10 +8,12 @@
     <div class="container">
         <div class="countries-header">
             <h1 class="countries-title">Статьи и приложения</h1>
+            {% if user.is_authenticated and user.is_staff or user.is_superuser %}
             <div style="display: flex; gap: 15px;">
                 <a href="{% url 'guides:article_create' %}" class="btn-primary">+ Добавить статью</a>
                 <a href="{% url 'guides:app_create' %}" class="btn-primary">+ Добавить приложение</a>
             </div>
+            {% endif %}
         </div>
 
         <!-- Выбор страны -->
@@ -45,7 +47,9 @@
             <div class="countries-grid">
                 {% for article in articles %}
                 <div class="country-card">
+                    {% if user.is_authenticated and user.is_staff or user.is_superuser %}
                     <a class="btn-delete" onclick="document.getElementById('deleteArticleModal{{ article.id }}').style.display='flex'; return false;">🗑️</a>
+                    {% endif %}
                     <div class="country-info">
                         <h5 class="country-name">
                             <a href="{{ article.link }}" target="_blank" class="article-title-link">
@@ -55,9 +59,11 @@
                         <p class="country-details">
                             Обновлено: {{ article.update|date:"d.m.Y" }}
                         </p>
+                        {% if user.is_authenticated and user.is_staff or user.is_superuser %}
                         <div style="margin-top: 15px;">
                             <a href="{% url 'guides:article_edit' article.id %}" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">Редактировать</a>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -85,16 +91,20 @@
             <div class="countries-grid">
                 {% for app in apps %}
                 <div class="country-card">
+                    {% if user.is_authenticated and user.is_staff or user.is_superuser %}
                     <a class="btn-delete" onclick="document.getElementById('deleteAppModal{{ app.id }}').style.display='flex'; return false;">🗑️</a>
+                    {% endif %}
                     <div class="country-info">
                         {% if app.logo %}
                             <img src="{{ app.logo.url }}" alt="{{ app.title }}" style="width: 60px; height: 60px; border-radius: 12px; margin-bottom: 10px;">
                         {% endif %}
                         <h5 class="country-name">{{ app.title }}</h5>
                         <p class="country-details">{{ app.description }}</p>
+                        {% if user.is_authenticated and user.is_staff or user.is_superuser %}
                         <div style="margin-top: 15px;">
                             <a href="{% url 'guides:app_edit' app.id %}" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">Редактировать</a>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
 
