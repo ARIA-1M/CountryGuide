@@ -716,3 +716,66 @@ input, textarea, select {
     border-radius: 8px;
     cursor: pointer;
 }
+
+/* Стили для форм */
+.container-py-4 {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.mb-3 {
+    margin-bottom: 1.5rem;
+}
+
+.mt-2 {
+    margin-top: 0.5rem;
+}
+
+.mt-3 {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 15px;
+}
+
+.form-label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+    color: var(--footer-text);
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid var(--gradient-start);
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--gradient-end);
+    box-shadow: 0 0 0 3px rgba(103, 115, 140, 0.1);
+}
+
+textarea {
+    resize: vertical;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+}

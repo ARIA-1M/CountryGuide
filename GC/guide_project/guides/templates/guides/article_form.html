@@ -1,26 +1,45 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{% if mode == 'create' %}Добавить{% else %}Редактировать{% endif %} статью</title>
-</head>
-<body>
-    <h1>{% if mode == 'create' %}Добавить статью{% else %}Редактировать статью{% endif %}</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label>Страна:</label>
-        <select name="country_id" required>
-            {% for country in countries %}
-                <option value="{{ country.id }}" {% if article and article.country.id == country.id %}selected{% endif %}>
-                    {{ country.name }}
-                </option>
-            {% endfor %}
-        </select><br>
-        <label>Заголовок:</label>
-        <input type="text" name="title" value="{{ article.title|default:'' }}" required><br>
-        <label>Ссылка:</label>
-        <input type="url" name="link" value="{{ article.link|default:'' }}" required><br>
-        <button type="submit">Сохранить</button>
-        <a href="{% url 'guides:articles_list' %}">Отмена</a>
-    </form>
-</body>
-</html>
+{% extends 'guides/base.html' %}
+{% load static %}
+
+{% block title %}ГПС - {% if mode == 'create' %}Добавление{% else %}Редактирование{% endif %} статьи{% endblock %}
+
+{% block content %}
+<div class="container-py-4">
+    <div class="card">
+        <div class="card-header">
+            <h4>{% if mode == 'create' %}Добавить статью{% else %}Редактировать статью{% endif %}</h4>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label class="form-label">Страна</label>
+                    <select name="country_id" required>
+                        {% for country in countries %}
+                            <option value="{{ country.id }}" {% if article and article.country.id == country.id %}selected{% endif %}>
+                                {{ country.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Заголовок</label>
+                    <input type="text" name="title" value="{{ article.title|default:'' }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Ссылка</label>
+                    <input type="url" name="link" value="{{ article.link|default:'' }}" required>
+                </div>
+                
+                <div class="mt-3">
+                    <button type="submit" class="btn-success">Сохранить</button>
+                    <a href="{% url 'guides:articles_list' %}" class="btn-secondary">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

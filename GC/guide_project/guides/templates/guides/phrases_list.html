@@ -4,92 +4,128 @@
 {% block title %}ГПС - Разговорник{% endblock %}
 
 {% block content %}
-
-<!-- Кнопки добавления  -->
-
-<div class="admin-buttons" style="margin-bottom: 20px;">
-    <a href="{% url 'guides:category_create' %}" style="background: #4CAF50; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-right: 10px;">+ Добавить категорию</a>
-    <a href="{% url 'guides:phrase_create' %}" style="background: #4CAF50; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px;">+ Добавить фразу</a>
-</div>
-
-
-<h1>Разговорник</h1>
-
-<!-- Шаг 1: Выбор страны -->
-<form method="get" id="country-form">
-    <label for="country_id">Выберите страну:</label>
-    <select name="country_id" id="country_id" onchange="this.form.submit()">
-        <option value="">-- Выберите страну --</option>
-        {% for country in countries %}
-            <option value="{{ country.id }}" {% if selected_country_id|stringformat:"s" == country.id|stringformat:"s" %}selected{% endif %}>
-                {{ country.name }}
-            </option>
-        {% endfor %}
-    </select>
-</form>
-
-{% if selected_country %}
-    <h2>{{ selected_country.name }}</h2>
-    
-    <!-- Шаг 2: Выбор категории -->
-    {% if categories %}
-        <form method="get" id="category-form">
-            <input type="hidden" name="country_id" value="{{ selected_country.id }}">
-            <label for="category_id">Выберите категорию:</label>
-            <select name="category_id" id="category_id" onchange="this.form.submit()">
-                <option value="">-- Выберите категорию --</option>
-                {% for category in categories %}
-                    <option value="{{ category.id }}" {% if selected_category_id|stringformat:"s" == category.id|stringformat:"s" %}selected{% endif %}>
-                        {{ category.title }}
-                    </option>
-                {% endfor %}
-            </select>
-        </form>
-
-        <!-- Управление категориями (только для админа) -->
-        {% if user.is_staff or user.is_superuser %}
-            <div style="margin: 10px 0;">
-                {% for category in categories %}
-                    <span style="margin-right: 15px;">
-                        {{ category.title }}
-                        <a href="{% url 'guides:category_edit' category.id %}" style="color: blue; text-decoration: none; margin-left: 5px;">✏️</a>
-                        <a href="{% url 'guides:category_delete' category.id %}" style="color: red; text-decoration: none;" onclick="return confirm('Удалить категорию? Все фразы в ней потеряют привязку!')">❌</a>
-                    </span>
-                {% endfor %}
+<div class="countries-page">
+    <div class="container">
+        <div class="countries-header">
+            <h1 class="countries-title">Разговорник</h1>
+            <div style="display: flex; gap: 15px;">
+                <a href="{% url 'guides:category_create' %}" class="btn-primary">+ Добавить категорию</a>
+                <a href="{% url 'guides:phrase_create' %}" class="btn-primary">+ Добавить фразу</a>
             </div>
+        </div>
+
+        <!-- Выбор страны -->
+        <div class="filter-section" style="background: white; padding: 20px; border-radius: 15px; margin-bottom: 30px;">
+            <form method="get">
+                <label for="country_id" style="font-weight: 600; margin-right: 15px;">🌍 Выберите страну:</label>
+                <select name="country_id" id="country_id" onchange="this.form.submit()" style="padding: 10px 20px; border-radius: 10px; border: 1px solid #ddd;">
+                    <option value="">-- Выберите страну --</option>
+                    {% for country in countries %}
+                        <option value="{{ country.id }}" {% if selected_country_id|stringformat:"s" == country.id|stringformat:"s" %}selected{% endif %}>
+                            {{ country.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+
+        {% if selected_country %}
+            <!-- Информация о стране -->
+            <div class="country-info" style="background: white; border-radius: 15px; padding: 20px; margin-bottom: 30px;">
+                <h2 style="margin-bottom: 15px;">{{ selected_country.name }}</h2>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <span style="background: #E5E7EB; padding: 5px 15px; border-radius: 20px;">💰 Валюта: {{ selected_country.currency }}</span>
+                    <span style="background: #E5E7EB; padding: 5px 15px; border-radius: 20px;">📊 Налог: {{ selected_country.vat_rate }}%</span>
+                    <span style="background: #E5E7EB; padding: 5px 15px; border-radius: 20px;">🗣️ Язык: {{ selected_country.language }}</span>
+                </div>
+            </div>
+
+            {% if categories %}
+                <!-- Выбор категории -->
+                <div class="filter-section" style="background: white; padding: 20px; border-radius: 15px; margin-bottom: 30px;">
+                    <form method="get">
+                        <input type="hidden" name="country_id" value="{{ selected_country.id }}">
+                        <label for="category_id" style="font-weight: 600; margin-right: 15px;">📂 Выберите категорию:</label>
+                        <select name="category_id" id="category_id" onchange="this.form.submit()" style="padding: 10px 20px; border-radius: 10px; border: 1px solid #ddd;">
+                            <option value="">-- Выберите категорию --</option>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}" {% if selected_category_id|stringformat:"s" == category.id|stringformat:"s" %}selected{% endif %}>
+                                    {{ category.title }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </div>
+
+                <!-- Список категорий с кнопками управления -->
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 30px;">
+                    {% for category in categories %}
+                        <div style="background: white; padding: 10px 20px; border-radius: 25px; display: inline-flex; align-items: center; gap: 10px;">
+                            <span>{{ category.title }}</span>
+                            <a href="{% url 'guides:category_edit' category.id %}" style="color: #4CAF50; text-decoration: none;">✏️</a>
+                            <a onclick="document.getElementById('deleteCategoryModal{{ category.id }}').style.display='flex'; return false;" style="color: #f44336; text-decoration: none; cursor: pointer;">🗑️</a>
+                        </div>
+
+                        <!-- Модальное окно удаления категории -->
+                        <div id="deleteCategoryModal{{ category.id }}" class="modal">
+                            <div class="modal-content">
+                                <h3>Подтверждение удаления</h3>
+                                <p>Вы уверены, что хотите удалить категорию <strong>"{{ category.title }}"</strong>?</p>
+                                <div class="modal-buttons">
+                                    <form method="post" action="{% url 'guides:category_delete' category.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn-danger">Удалить</button>
+                                    </form>
+                                    <button onclick="document.getElementById('deleteCategoryModal{{ category.id }}').style.display='none'" class="btn-warning">Отмена</button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if selected_category and phrases %}
+                <h2 class="countries-title" style="font-size: 1.8rem; margin: 30px 0 20px;">🗣️ {{ selected_category.title }}</h2>
+                <div class="countries-grid">
+                    {% for phrase in phrases %}
+                    <div class="country-card">
+                        <div class="country-info">
+                            <h5 class="country-name">{{ phrase.original_text }}</h5>
+                            <p class="country-details">
+                                {{ phrase.translated_text }}<br>
+                                {% if phrase.transliteration %}
+                                    <em>({{ phrase.transliteration }})</em>
+                                {% endif %}
+                            </p>
+                            <div style="margin-top: 15px; display: flex; gap: 10px;">
+                                <a href="{% url 'guides:phrase_edit' phrase.id %}" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">✏️ Редактировать</a>
+                                <a onclick="document.getElementById('deletePhraseModal{{ phrase.id }}').style.display='flex'; return false;" class="btn-danger" style="padding: 8px 20px; font-size: 0.9rem; text-decoration: none; display: inline-block; border-radius: 8px;">🗑️ Удалить</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Модальное окно удаления фразы -->
+                    <div id="deletePhraseModal{{ phrase.id }}" class="modal">
+                        <div class="modal-content">
+                            <h3>Подтверждение удаления</h3>
+                            <p>Вы уверены, что хотите удалить фразу <strong>"{{ phrase.original_text }}"</strong>?</p>
+                            <div class="modal-buttons">
+                                <form method="post" action="{% url 'guides:phrase_delete' phrase.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-danger">Удалить</button>
+                                </form>
+                                <button onclick="document.getElementById('deletePhraseModal{{ phrase.id }}').style.display='none'" class="btn-warning">Отмена</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% elif selected_category and not phrases %}
+                <p>В этой категории пока нет фраз для данной страны.</p>
+            {% endif %}
+        {% else %}
+            <p>Выберите страну, чтобы увидеть разговорник.</p>
         {% endif %}
-    {% else %}
-        <p>Для этой страны пока нет фраз.</p>
-    {% endif %}
-    
-    <!-- Шаг 3: Показ фраз -->
-    {% if selected_category and phrases %}
-        <h3>{{ selected_category.title }}</h3>
-        <ul>
-            {% for phrase in phrases %}
-                <li>
-                    <strong>{{ phrase.original_text }}</strong><br>
-                    {{ phrase.translated_text }}<br>
-                    {% if phrase.transliteration %}
-                        <em>({{ phrase.transliteration }})</em>
-                    {% endif %}
-                    <!-- Кнопки редактирования/удаления фразы (только для админа) -->
-                    {% if user.is_staff or user.is_superuser %}
-                        <span style="margin-top: 5px; display: inline-block;">
-                            <a href="{% url 'guides:phrase_edit' phrase.id %}" style="color: blue; text-decoration: none; margin-right: 5px;">✏️ Редактировать</a>
-                            <a href="{% url 'guides:phrase_delete' phrase.id %}" style="color: red; text-decoration: none;" onclick="return confirm('Удалить фразу?')">❌ Удалить</a>
-                        </span>
-                    {% endif %}
-                </li>
-                <hr>
-            {% endfor %}
-        </ul>
-    {% elif selected_category and not phrases %}
-        <p>В этой категории пока нет фраз для данной страны.</p>
-    {% endif %}
-    
-{% endif %}
-
-
-
+    </div>
+</div>
 {% endblock %}

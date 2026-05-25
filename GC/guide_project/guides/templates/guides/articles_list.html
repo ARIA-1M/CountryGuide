@@ -4,77 +4,119 @@
 {% block title %}ГПС - Статьи и приложения{% endblock %}
 
 {% block content %}
+<div class="countries-page">
+    <div class="container">
+        <div class="countries-header">
+            <h1 class="countries-title">Статьи и приложения</h1>
+            <div style="display: flex; gap: 15px;">
+                <a href="{% url 'guides:article_create' %}" class="btn-primary">+ Добавить статью</a>
+                <a href="{% url 'guides:app_create' %}" class="btn-primary">+ Добавить приложение</a>
+            </div>
+        </div>
 
-<!-- Кнопки добавления -->
+        <!-- Выбор страны -->
+        <div class="filter-section" style="background: white; padding: 20px; border-radius: 15px; margin-bottom: 30px;">
+            <form method="get">
+                <label for="country_id" style="font-weight: 600; margin-right: 15px;">🌍 Выберите страну:</label>
+                <select name="country_id" id="country_id" onchange="this.form.submit()" style="padding: 10px 20px; border-radius: 10px; border: 1px solid #ddd;">
+                    <option value="">-- Выберите страну --</option>
+                    {% for country in countries %}
+                        <option value="{{ country.id }}" {% if selected_country_id|stringformat:"s" == country.id|stringformat:"s" %}selected{% endif %}>
+                            {{ country.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
 
-<div class="admin-buttons" style="margin-bottom: 20px;">
-    <a href="{% url 'guides:article_create' %}" style="background: #4CAF50; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-right: 10px;">+ Добавить статью</a>
-    <a href="{% url 'guides:app_create' %}" style="background: #4CAF50; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px;">+ Добавить приложение</a>
-</div>
-
-
-<h3>Статьи о странах</h3>
-
-<form method="get">
-    <label for="country_id">Выберите страну:</label>
-    <select name="country_id" id="country_id" onchange="this.form.submit()">
-        <option value="">-- Выберите страну --</option>
-        {% for country in countries %}
-            <option value="{{ country.id }}" {% if selected_country_id|stringformat:"s" == country.id|stringformat:"s" %}selected{% endif %}>
-                {{ country.name }}
-            </option>
-        {% endfor %}
-    </select>
-</form>
-
-{% if selected_country %}
-    <h2>{{ selected_country.name }}</h2>
-{% endif %}
-
-{% if articles %}
-    <ul>
-        {% for article in articles %}
-            <li>
-                <a href="{{ article.link }}" target="_blank">{{ article.title }}</a>
-                (обновлено: {{ article.update|date:"d.m.Y" }})
-                <!-- Кнопки редактирования/удаления статьи (видны только админу) -->
-                {% if user.is_staff or user.is_superuser %}
-                    <span style="margin-left: 10px;">
-                        <a href="{% url 'guides:article_edit' article.id %}" style="color: blue; text-decoration: none; margin-right: 5px;">✏️</a>
-                        <a href="{% url 'guides:article_delete' article.id %}" style="color: red; text-decoration: none;" onclick="return confirm('Удалить статью?')">❌</a>
-                    </span>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
-{% elif selected_country %}
-    <p>Для этой страны пока нет статей.</p>
-{% endif %}
-
-<h3>Полезные приложения</h3>
-{% if apps %}
-    <ul>
-        {% for app in apps %}
-            <li style="margin-bottom: 15px;">
-                {% if app.logo %}
-                    <img src="{{ app.logo.url }}" alt="{{ app.title }}" width="50" height="50" style="vertical-align: middle;">
-                {% endif %}
-                <div style="display: inline-block; margin-left: 10px;">
-                    <strong>{{ app.title }}</strong><br>
-                    {{ app.description }}
+        {% if selected_country %}
+            <!-- Информация о стране -->
+            <div class="country-info" style="background: white; border-radius: 15px; padding: 20px; margin-bottom: 30px;">
+                <h2 style="margin-bottom: 15px;">{{ selected_country.name }}</h2>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <span style="background: #E5E7EB; padding: 5px 15px; border-radius: 20px;">💰 Валюта: {{ selected_country.currency }}</span>
+                    <span style="background: #E5E7EB; padding: 5px 15px; border-radius: 20px;">📊 Налог: {{ selected_country.vat_rate }}%</span>
+                    <span style="background: #E5E7EB; padding: 5px 15px; border-radius: 20px;">🗣️ Язык: {{ selected_country.language }}</span>
                 </div>
-                <!-- Кнопки редактирования/удаления приложения (видны только админу) -->
-                {% if user.is_staff or user.is_superuser %}
-                    <span style="margin-left: 10px;">
-                        <a href="{% url 'guides:app_edit' app.id %}" style="color: blue; text-decoration: none; margin-right: 5px;">✏️</a>
-                        <a href="{% url 'guides:app_delete' app.id %}" style="color: red; text-decoration: none;" onclick="return confirm('Удалить приложение?')">❌</a>
-                    </span>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>Приложений пока нет.</p>
-{% endif %}
+            </div>
 
+            <!-- Статьи -->
+            <h2 class="countries-title" style="font-size: 1.8rem; margin: 30px 0 20px;">📖 Статьи</h2>
+            <div class="countries-grid">
+                {% for article in articles %}
+                <div class="country-card">
+                    <a class="btn-delete" onclick="document.getElementById('deleteArticleModal{{ article.id }}').style.display='flex'; return false;">🗑️</a>
+                    <div class="country-info">
+                        <h5 class="country-name">
+                            <a href="{{ article.link }}" target="_blank" style="text-decoration: none; color: inherit;">{{ article.title }}</a>
+                        </h5>
+                        <p class="country-details">
+                            Обновлено: {{ article.update|date:"d.m.Y" }}
+                        </p>
+                        <div style="margin-top: 15px;">
+                            <a href="{% url 'guides:article_edit' article.id %}" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">✏️ Редактировать</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Модальное окно удаления статьи -->
+                <div id="deleteArticleModal{{ article.id }}" class="modal">
+                    <div class="modal-content">
+                        <h3>Подтверждение удаления</h3>
+                        <p>Вы уверены, что хотите удалить статью <strong>"{{ article.title }}"</strong>?</p>
+                        <div class="modal-buttons">
+                            <form method="post" action="{% url 'guides:article_delete' article.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-danger">Удалить</button>
+                            </form>
+                            <button onclick="document.getElementById('deleteArticleModal{{ article.id }}').style.display='none'" class="btn-warning">Отмена</button>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                    <p>Статей пока нет.</p>
+                {% endfor %}
+            </div>
+
+            <!-- Приложения -->
+            <h2 class="countries-title" style="font-size: 1.8rem; margin: 30px 0 20px;">📱 Полезные приложения</h2>
+            <div class="countries-grid">
+                {% for app in apps %}
+                <div class="country-card">
+                    <a class="btn-delete" onclick="document.getElementById('deleteAppModal{{ app.id }}').style.display='flex'; return false;">🗑️</a>
+                    <div class="country-info">
+                        {% if app.logo %}
+                            <img src="{{ app.logo.url }}" alt="{{ app.title }}" style="width: 60px; height: 60px; border-radius: 12px; margin-bottom: 10px;">
+                        {% endif %}
+                        <h5 class="country-name">{{ app.title }}</h5>
+                        <p class="country-details">{{ app.description }}</p>
+                        <div style="margin-top: 15px;">
+                            <a href="{% url 'guides:app_edit' app.id %}" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">✏️ Редактировать</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Модальное окно удаления приложения -->
+                <div id="deleteAppModal{{ app.id }}" class="modal">
+                    <div class="modal-content">
+                        <h3>Подтверждение удаления</h3>
+                        <p>Вы уверены, что хотите удалить приложение <strong>"{{ app.title }}"</strong>?</p>
+                        <div class="modal-buttons">
+                            <form method="post" action="{% url 'guides:app_delete' app.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-danger">Удалить</button>
+                            </form>
+                            <button onclick="document.getElementById('deleteAppModal{{ app.id }}').style.display='none'" class="btn-warning">Отмена</button>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                    <p>Приложений пока нет.</p>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Выберите страну, чтобы увидеть статьи и приложения.</p>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
