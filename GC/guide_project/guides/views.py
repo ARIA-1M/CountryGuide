@@ -1,17 +1,31 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from .forms import CountryForm
+
+
 
 from .models import Country, Article, LocalApp, PhraseCategory, Phrase
 
+
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .forms import CountryForm
+
 from .forms import TripBudgetForm
-from .models import Country
+
 from .forms import UsersForm
 
 
 
+
+
+
+# Главная страница
 def home(request):
     return render(request, 'guides/home.html')
+
+# Список стран
+def country_list(request):
+    countries = Country.objects.all()
+    return render(request, 'guides/country_list.html', {'countries': countries})
 
 
 # Добавление новой страны 
@@ -21,11 +35,13 @@ def country_create(request):
         print(form.errors)  
         if form.is_valid():
             form.save()
-            return redirect('/')
+
+            return redirect('/country/')
     else:
         form = CountryForm()
     
     return render(request, 'guides/country_create.html', {'form': form})
+
 
 
 def country_detail(request, country_id):
@@ -45,6 +61,48 @@ def articles_list(request):
     apps = None
     selected_country = None
 
+    if selected_country_id:
+        selected_country = get_object_or_404(Country, id=selected_country_id)
+        articles = selected_country.articles.all().order_by('-update')
+        apps = selected_country.apps.all()
+    
+    return render(request, 'guides/articles_list.html', {
+        'countries': countries,
+        'selected_country_id': selected_country_id,
+        'articles': articles,
+        'apps': apps,
+        'selected_country': selected_country,
+    })
+
+
+# Удаление страны
+def country_delete(request, pk):
+    country = get_object_or_404(Country, pk=pk)
+    
+    if request.method == 'POST':
+        country_name = country.name
+        country.delete()
+        messages.success(request, f'Трасса "{country_name}" удалена!')
+        return redirect('/country/')
+    
+    return render(request, 'guides/country_confirm_delete.html', {'country': country})
+
+# Регистрация
+def register(request):
+    if request.method == 'POST':
+        form = UsersForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Регистрация прошла успешно! Теперь вы можете войти.')
+            return redirect('/')
+        else:
+            print(form.errors) 
+    else:
+        form = UsersForm()
+    
+    return render(request, 'guides/register.html', {'form': form})
+
+
 # Создание поездки
 def trip_create(request):
     if request.method == 'POST':
@@ -55,6 +113,7 @@ def trip_create(request):
             return redirect('guides:home')
     else:
         form = TripBudgetForm()
+
 
     
     if selected_country_id:
@@ -272,3 +331,7 @@ def phrase_delete(request, phrase_id):
         messages.success(request, 'Фраза удалена')
         return redirect('guides:phrases_list')
     return render(request, 'guides/confirm_delete.html', {'object': phrase, 'type': 'фразу'})
+
+    
+    return render(request, 'guides/trip_create.html', {'form': form, 'title': 'Создать поездку'})
+

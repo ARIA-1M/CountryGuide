@@ -1,9 +1,13 @@
 from django.urls import path
 from . import views
 
+from django.contrib.auth import views as auth_views
+
+
 app_name = 'guides'
 
 urlpatterns = [
+
     path('', views.home, name='home'),
     path('country_create/', views.country_create, name='country_create'),
     path('country/<int:country_id>/', views.country_detail, name='country_detail'),
@@ -29,4 +33,21 @@ urlpatterns = [
     path('phrase/create/', views.phrase_create, name='phrase_create'),
     path('phrase/edit/<int:phrase_id>/', views.phrase_edit, name='phrase_edit'),
     path('phrase/delete/<int:phrase_id>/', views.phrase_delete, name='phrase_delete'),
+
+    #Вход
+    path('', auth_views.LoginView.as_view(template_name='guides/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    # Регистрация
+    path('register/', views.register, name='register'),
+    # Главная стараница
+    path('home/', views.home, name='home'),
+    # Список стран
+    path('country/', views.country_list, name='country_list'),
+    # Добавление стран
+    path('country/create/', views.country_create, name='country_create'),
+    # Удаление трассы
+    path('country/<int:pk>/delete/', views.country_delete, name='country_delete'),
+    # Добавление поездки с бюджетом
+    path('trip/create/', views.trip_create, name='trip_create'),
+
 ]

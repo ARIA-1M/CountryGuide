@@ -1,0 +1,50 @@
+{% extends 'guides/base.html' %}
+{% load static %}
+
+{% block title %}ГПС - Страны{% endblock %}
+
+{% block content %}
+<div class="countries-page">
+    <div class="container">
+        <div class="countries-header">
+            <h1 class="countries-title">Страны мира</h1>
+            <a href="{% url 'guides:country_create' %}" class="btn-primary">
+                + Добавить страну
+            </a>
+        </div>
+
+        <div class="countries-grid">
+            {% for country in countries %}
+            <div class="country-card">
+                <a class="btn-delete" onclick="document.getElementById('deleteModal{{ country.pk }}').style.display='flex'; return false;">🗑️</a>
+
+                <div class="country-info">
+                    <h5 class="country-name">{{ country.name }}</h5>
+                    <p class="country-details">
+                        <span class="country-currency">Валюта: {{ country.currency }}</span><br>
+                        <span class="country-tax">Налог: {{ country.vat_rate }}%</span><br>
+                        <span class="country-language">Язык: {{ country.language }}</span>
+                    </p>
+                </div>
+            </div>
+
+            <div id="deleteModal{{ country.pk }}" class="modal">
+                <div class="modal-content">
+                    <h3>Подтверждение удаления</h3>
+                    <p>Вы уверены, что хотите удалить страну <strong>"{{ country.name }}"</strong>?</p>
+                    <div class="modal-buttons">
+                        <form method="post" action="{% url 'guides:country_delete' country.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-danger">Удалить</button>
+                        </form>
+                        <button onclick="document.getElementById('deleteModal{{ country.pk }}').style.display='none'" class="btn-warning">Отмена</button>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>Нет стран</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
