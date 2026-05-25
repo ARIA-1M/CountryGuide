@@ -779,3 +779,40 @@ textarea {
 .btn-danger:hover {
     background: #c82333;
 }
+
+/* Маленькие кнопки для фраз */
+.btn-small {
+    background: var(--footer-text);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.75rem;
+    display: inline-block;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-small:hover {
+    background: var(--divider-icon);
+    transform: translateY(-1px);
+}
+
+.btn-small-danger {
+    background: var(--gradient-end);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.75rem;
+    display: inline-block;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-small-danger:hover {
+    background: #4b5467;
+    transform: translateY(-1px);
+}
