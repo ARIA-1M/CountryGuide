@@ -17,9 +17,9 @@
         <!-- Выбор страны -->
         <div class="filter-section" style="background: white; padding: 20px; border-radius: 15px; margin-bottom: 30px;">
             <form method="get">
-                <label for="country_id" style="font-weight: 600; margin-right: 15px;">🌍 Выберите страну:</label>
+                <label for="country_id" style="font-weight: 600; margin-right: 15px;">Выберите страну:</label>
                 <select name="country_id" id="country_id" onchange="this.form.submit()" style="padding: 10px 20px; border-radius: 10px; border: 1px solid #ddd;">
-                    <option value="">-- Выберите страну --</option>
+                    <option value="">Выберите страну</option>
                     {% for country in countries %}
                         <option value="{{ country.id }}" {% if selected_country_id|stringformat:"s" == country.id|stringformat:"s" %}selected{% endif %}>
                             {{ country.name }}
@@ -34,9 +34,9 @@
             <div class="country-info" style="background: white; border-radius: 15px; padding: 20px; margin-bottom: 30px;">
                 <h2 style="margin-bottom: 15px;">{{ selected_country.name }}</h2>
                 <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                    <span style="background: #E5E7EB; padding: 5px 15px; border-radius: 20px;">💰 Валюта: {{ selected_country.currency }}</span>
-                    <span style="background: #E5E7EB; padding: 5px 15px; border-radius: 20px;">📊 Налог: {{ selected_country.vat_rate }}%</span>
-                    <span style="background: #E5E7EB; padding: 5px 15px; border-radius: 20px;">🗣️ Язык: {{ selected_country.language }}</span>
+                    <span style="background: #E5E7EB; padding: 5px 15px; border-radius: 20px;">Валюта: {{ selected_country.currency }}</span>
+                    <span style="background: #E5E7EB; padding: 5px 15px; border-radius: 20px;">Налог: {{ selected_country.vat_rate }}%</span>
+                    <span style="background: #E5E7EB; padding: 5px 15px; border-radius: 20px;">Язык: {{ selected_country.language }}</span>
                 </div>
             </div>
 
@@ -45,7 +45,7 @@
                 <div class="filter-section" style="background: white; padding: 20px; border-radius: 15px; margin-bottom: 30px;">
                     <form method="get">
                         <input type="hidden" name="country_id" value="{{ selected_country.id }}">
-                        <label for="category_id" style="font-weight: 600; margin-right: 15px;">📂 Выберите категорию:</label>
+                        <label for="category_id" style="font-weight: 600; margin-right: 15px;">Выберите категорию:</label>
                         <select name="category_id" id="category_id" onchange="this.form.submit()" style="padding: 10px 20px; border-radius: 10px; border: 1px solid #ddd;">
                             <option value="">-- Выберите категорию --</option>
                             {% for category in categories %}
@@ -62,7 +62,7 @@
                     {% for category in categories %}
                         <div style="background: white; padding: 10px 20px; border-radius: 25px; display: inline-flex; align-items: center; gap: 10px;">
                             <span>{{ category.title }}</span>
-                            <a href="{% url 'guides:category_edit' category.id %}" style="color: #4CAF50; text-decoration: none;">✏️</a>
+                            <a href="{% url 'guides:category_edit' category.id %}" style="color: #4CAF50; text-decoration: none;"></a>
                             <a onclick="document.getElementById('deleteCategoryModal{{ category.id }}').style.display='flex'; return false;" style="color: #f44336; text-decoration: none; cursor: pointer;">🗑️</a>
                         </div>
 
@@ -85,7 +85,7 @@
             {% endif %}
 
             {% if selected_category and phrases %}
-                <h2 class="countries-title" style="font-size: 1.8rem; margin: 30px 0 20px;">🗣️ {{ selected_category.title }}</h2>
+                <h2 class="countries-title" style="font-size: 1.8rem; margin: 30px 0 20px;">{{ selected_category.title }}</h2>
                 <div class="countries-grid">
                     {% for phrase in phrases %}
                     <div class="country-card">
@@ -98,7 +98,7 @@
                                 {% endif %}
                             </p>
                             <div style="margin-top: 15px; display: flex; gap: 10px;">
-                                <a href="{% url 'guides:phrase_edit' phrase.id %}" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">✏️ Редактировать</a>
+                                <a href="{% url 'guides:phrase_edit' phrase.id %}" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">Редактировать</a>
                                 <a onclick="document.getElementById('deletePhraseModal{{ phrase.id }}').style.display='flex'; return false;" class="btn-danger" style="padding: 8px 20px; font-size: 0.9rem; text-decoration: none; display: inline-block; border-radius: 8px;">🗑️ Удалить</a>
                             </div>
                         </div>

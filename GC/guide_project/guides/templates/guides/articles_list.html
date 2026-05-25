@@ -17,9 +17,9 @@
         <!-- Выбор страны -->
         <div class="filter-section" style="background: white; padding: 20px; border-radius: 15px; margin-bottom: 30px;">
             <form method="get">
-                <label for="country_id" style="font-weight: 600; margin-right: 15px;">🌍 Выберите страну:</label>
+                <label for="country_id" style="font-weight: 600; margin-right: 15px;">Выберите страну:</label>
                 <select name="country_id" id="country_id" onchange="this.form.submit()" style="padding: 10px 20px; border-radius: 10px; border: 1px solid #ddd;">
-                    <option value="">-- Выберите страну --</option>
+                    <option value="">Выберите страну</option>
                     {% for country in countries %}
                         <option value="{{ country.id }}" {% if selected_country_id|stringformat:"s" == country.id|stringformat:"s" %}selected{% endif %}>
                             {{ country.name }}
@@ -34,14 +34,14 @@
             <div class="country-info" style="background: white; border-radius: 15px; padding: 20px; margin-bottom: 30px;">
                 <h2 style="margin-bottom: 15px;">{{ selected_country.name }}</h2>
                 <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                    <span style="background: #E5E7EB; padding: 5px 15px; border-radius: 20px;">💰 Валюта: {{ selected_country.currency }}</span>
-                    <span style="background: #E5E7EB; padding: 5px 15px; border-radius: 20px;">📊 Налог: {{ selected_country.vat_rate }}%</span>
-                    <span style="background: #E5E7EB; padding: 5px 15px; border-radius: 20px;">🗣️ Язык: {{ selected_country.language }}</span>
+                    <span style="background: #E5E7EB; padding: 5px 15px; border-radius: 20px;">Валюта: {{ selected_country.currency }}</span>
+                    <span style="background: #E5E7EB; padding: 5px 15px; border-radius: 20px;">Налог: {{ selected_country.vat_rate }}%</span>
+                    <span style="background: #E5E7EB; padding: 5px 15px; border-radius: 20px;">Язык: {{ selected_country.language }}</span>
                 </div>
             </div>
 
             <!-- Статьи -->
-            <h2 class="countries-title" style="font-size: 1.8rem; margin: 30px 0 20px;">📖 Статьи</h2>
+            <h2 class="countries-title" style="font-size: 1.8rem; margin: 30px 0 20px;">Статьи</h2>
             <div class="countries-grid">
                 {% for article in articles %}
                 <div class="country-card">
@@ -54,7 +54,7 @@
                             Обновлено: {{ article.update|date:"d.m.Y" }}
                         </p>
                         <div style="margin-top: 15px;">
-                            <a href="{% url 'guides:article_edit' article.id %}" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">✏️ Редактировать</a>
+                            <a href="{% url 'guides:article_edit' article.id %}" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">Редактировать</a>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
             </div>
 
             <!-- Приложения -->
-            <h2 class="countries-title" style="font-size: 1.8rem; margin: 30px 0 20px;">📱 Полезные приложения</h2>
+            <h2 class="countries-title" style="font-size: 1.8rem; margin: 30px 0 20px;">Полезные приложения</h2>
             <div class="countries-grid">
                 {% for app in apps %}
                 <div class="country-card">
@@ -91,7 +91,7 @@
                         <h5 class="country-name">{{ app.title }}</h5>
                         <p class="country-details">{{ app.description }}</p>
                         <div style="margin-top: 15px;">
-                            <a href="{% url 'guides:app_edit' app.id %}" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">✏️ Редактировать</a>
+                            <a href="{% url 'guides:app_edit' app.id %}" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">Редактировать</a>
                         </div>
                     </div>
                 </div>
