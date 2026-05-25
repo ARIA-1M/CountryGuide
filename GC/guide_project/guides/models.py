@@ -16,7 +16,7 @@ class Country(models.Model):
 
 # Модель поездки
 class Trip(models.Model):
-    сountry = models.ForeignKey(Country,on_delete=models.CASCADE, related_name='сountry',verbose_name="Страна")
+    country = models.ForeignKey(Country,on_delete=models.CASCADE, related_name='country',verbose_name="Страна")
     user = models.ForeignKey(User,on_delete=models.CASCADE, verbose_name="Пользователь")
     start_date = models.DateField(verbose_name="Дата начала поездки")
     end_date = models.DateField(verbose_name="Дата окончания поездки")
@@ -42,12 +42,6 @@ class Budget(models.Model):
     @property
     def remaining(self):
         return self.amount - self.spent
-    
-    @property
-    def spent_percent(self):
-        if self.amount > 0:
-            return int((self.spent / self.amount) * 100)
-        return 0
     
     class Meta:
         verbose_name = "Бюджет"

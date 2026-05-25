@@ -1,11 +1,9 @@
 /* Слайдер */
 document.addEventListener('DOMContentLoaded', function() {
     let slides = document.querySelectorAll('.slide');
-    console.log(slides);
     let currentSlide = 0;
 
     function showSlide(index) {
-        console.log('JS зашел!');
         slides.forEach(slide => slide.classList.remove('active'));
         
         if (index >= slides.length) currentSlide = 0;
@@ -73,35 +71,36 @@ document.addEventListener('DOMContentLoaded', function() {
     dailyLimit.addEventListener('input', updateBudgetInfo);
 });
 
-document.getElementById('progressFill').style.width = '{{ budget.spent_percent }}%';
-
+//Функция для управления бюджетом
 document.addEventListener('DOMContentLoaded', function() {
-    // Получаем данные из HTML
-    const totalBudgetEl = document.getElementById('totalBudget');
-    const spentAmountEl = document.getElementById('spentAmount');
-    const remainingAmountEl = document.getElementById('remainingAmount');
-    const expenseInput = document.getElementById('expenseAmount');
-    const includeTaxCheck = document.getElementById('includeTax');
+    console.log("Вошел в функцию для бюджета");
+    // Получаем элементов стнаницы
+    const totalBudgetEl = document.getElementById('totalBudget');// общий бюджет
+    const spentAmountEl = document.getElementById('spentAmount');// расход
+    const remainingAmountEl = document.getElementById('remainingAmount');//остаток
+    const expenseInput = document.getElementById('expenseAmount');// поле расхода
+    const includeTaxCheck = document.getElementById('includeTax');// налог
     const taxAmountField = document.getElementById('taxAmountField');
-    const amountWithTaxSpan = document.getElementById('amountWithTax');
-    const rubAmountInput = document.getElementById('rubAmount');
-    const applyBtn = document.getElementById('applyExpenseBtn');
-    const completeTripBtn = document.getElementById('completeTripBtn');
-    const progressFill = document.getElementById('progressFill');
-    const progressPercent = document.querySelector('.progress-percent');
+    const amountWithTaxSpan = document.getElementById('amountWithTax');// поле сумма с налогом
+    const rubAmountInput = document.getElementById('rubAmount');// итоговая сумма
+    const applyBtn = document.getElementById('applyExpenseBtn');// кнопка расхода
+    const completeTripBtn = document.getElementById('completeTripBtn');// завершить поездку
     const taxRateSpan = document.getElementById('taxRate');
     const tripIdInput = document.getElementById('tripId');
     const currencyCodeSpan = document.getElementById('currencyCode');
+    console.log("код валюты страны " + currencyCodeSpan.innerText);
     
-    // Переменные
+    // Переменные для хранения данных
     let totalBudget = parseFloat(totalBudgetEl?.getAttribute('data-value') || 0);
     let currentSpent = parseFloat(spentAmountEl?.getAttribute('data-value') || 0);
     let taxRate = parseFloat(taxRateSpan?.textContent || 0);
     let currencyCode = currencyCodeSpan?.textContent || 'RUB';
+    console.log("код валюты страны " + currencyCode);
     let exchangeRate = 90;
     
     // Функция обновления цвета остатка
     function updateRemainingColor(remaining) {
+        console.log("обновил цвет остатка");
         const remainingSpan = document.getElementById('remainingAmount');
         if (!remainingSpan) return;
         
@@ -115,18 +114,11 @@ document.addEventListener('DOMContentLoaded', function() {
             remainingSpan.style.color = '#28a745';
             remainingSpan.className = 'stat-value remaining-good';
         }
-        
-        // Обновляем прогресс-бар
-        const percent = ((totalBudget - remaining) / totalBudget) * 100;
-        if (progressFill) {
-            progressFill.style.width = percent + '%';
-            progressFill.style.background = percent > 80 ? '#dc3545' : (percent > 50 ? '#ffc107' : '#28a745');
-        }
-        if (progressPercent) progressPercent.textContent = Math.round(percent) + '%';
     }
     
     // Получение курса валюты
     async function getExchangeRate() {
+        console.log("вошел в функцию расчета курса валют");
         if (currencyCode === 'RUB') {
             exchangeRate = 1;
             return;
@@ -137,6 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
             exchangeRate = data.rates.RUB;
             console.log(`Курс 1 ${currencyCode} = ${exchangeRate} RUB`);
+            
         } catch (error) {
             console.error('Ошибка получения курса:', error);
             exchangeRate = 90;
@@ -167,23 +160,26 @@ document.addEventListener('DOMContentLoaded', function() {
         let rubAmount = parseFloat(rubAmountInput?.value) || 0;
         let localAmount = parseFloat(expenseInput?.value) || 0;
         let includeTax = includeTaxCheck?.checked || false;
+        let tripId = tripIdInput?.value;
         
         if (rubAmount <= 0) return;
         
         let newSpent = currentSpent + rubAmount;
         
         if (newSpent > totalBudget) {
-            if (!confirm('⚠️ Внимание! Расход превышает бюджет! Продолжить?')) return;
+            if (!confirm(' Внимание! Расход превышает бюджет! Продолжить?')) return;
         }
         
         try {
-            const response = await fetch(`/trip/${tripIdInput?.value}/add-expense/`, {
+            // ИСПРАВЛЕНО: правильный URL и передача trip_id в теле
+            const response = await fetch(`/api/add-expense/${tripId}/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRFToken': getCsrfToken()
                 },
                 body: JSON.stringify({
+                    trip_id: tripId,
                     amount_local: localAmount,
                     amount_rub: rubAmount,
                     include_tax: includeTax
@@ -220,15 +216,21 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Завершение поездки
     async function completeTrip() {
+        let tripId = tripIdInput?.value;
+        
         if (!confirm('Завершить поездку?')) return;
         
         try {
-            const response = await fetch(`/trip/${tripIdInput?.value}/complete/`, {
+            // ИСПРАВЛЕНО: правильный URL и передача trip_id в теле
+            const response = await fetch(`/api/complete-trip/${tripId}/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRFToken': getCsrfToken()
-                }
+                },
+                body: JSON.stringify({
+                    trip_id: tripId
+                })
             });
             
             const data = await response.json();
@@ -261,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return cookieValue;
     }
     
-    // Навешиваем обработчики
+    // Применение обработчиков
     if (expenseInput) expenseInput.addEventListener('input', calculateRub);
     if (includeTaxCheck) includeTaxCheck.addEventListener('change', calculateRub);
     if (applyBtn) applyBtn.addEventListener('click', addExpense);
