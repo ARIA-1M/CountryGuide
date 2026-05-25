@@ -7,6 +7,9 @@ from .models import Country
 from .models import Budget
 from .models import Trip
 from .forms import UsersForm
+import json
+from django.http import JsonResponse
+from decimal import Decimal
 
 
 # Главная страница
@@ -106,8 +109,8 @@ def api_add_expense(request, trip_id):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
-            amount_rub = float(data.get('amount_rub', 0))
-            amount_local = float(data.get('amount_local', 0))
+            amount_rub = Decimal(str(data.get('amount_rub', 0)))
+            amount_local = Decimal(str(data.get('amount_local', 0)))
             include_tax = data.get('include_tax', False)
             
             trip = get_object_or_404(Trip, id=trip_id, user=request.user)
@@ -128,13 +131,18 @@ def api_add_expense(request, trip_id):
     
     return JsonResponse({'success': False, 'error': 'Invalid method'})
 
-# Завершение поездки
+# Завершение поездки через кнопку
+@login_required
 def api_complete_trip(request, trip_id): 
     if request.method == 'POST':
         try:
             trip = get_object_or_404(Trip, id=trip_id, user=request.user)
+            if not trip.is_active:
+                return JsonResponse({'success': False, 'error': 'Поездка уже завершена'})
+        
             trip.is_active = False
             trip.save()
+            messages.success(request, f'Поездка в {trip.country.name} завершена!')
             
             return JsonResponse({'success': True})
         except Exception as e:

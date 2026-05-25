@@ -24,7 +24,7 @@ urlpatterns = [
     path('budget/', views.latest_budget, name='budget'),
     path('trip/<int:trip_id>/budget/', views.trip_budget, name='trip_budget'),
     path('trip/<int:trip_id>/complete/', views.complete_trip, name='complete_trip'),
-    path('trip/<int:trip_id>/add-expense/', views.api_add_expense, name='api_add_expense'),
-    path('trip/<int:trip_id>/complete/', views.api_complete_trip, name='api_complete_trip'),
+    path('api/add-expense/<int:trip_id>/', views.api_add_expense, name='api_add_expense'),
+    path('api/complete-trip/<int:trip_id>/', views.api_complete_trip, name='api_complete_trip'),
     
 ]

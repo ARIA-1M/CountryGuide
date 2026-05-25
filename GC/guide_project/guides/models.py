@@ -23,7 +23,7 @@ class Trip(models.Model):
     is_active = models.BooleanField(default=True)
    
     def __str__(self):
-            return f"{self.сountry.name} - {self.start_date}"  
+            return f"{self.country.name} - {self.start_date}"  
     class Meta:
            verbose_name = "Поездка"
            verbose_name_plural = "Поездки"

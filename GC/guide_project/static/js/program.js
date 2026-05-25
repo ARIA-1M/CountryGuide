@@ -221,7 +221,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!confirm('Завершить поездку?')) return;
         
         try {
-            // ИСПРАВЛЕНО: правильный URL и передача trip_id в теле
             const response = await fetch(`/api/complete-trip/${tripId}/`, {
                 method: 'POST',
                 headers: {
