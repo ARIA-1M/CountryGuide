@@ -816,3 +816,15 @@ textarea {
     background: #4b5467;
     transform: translateY(-1px);
 }
+
+
+.article-title-link {
+    text-decoration: none;
+    color: var(--footer-text);
+    transition: color 0.2s ease;
+}
+
+.article-title-link:hover {
+    color: var(--gradient-end);
+    text-decoration: underline;
+}

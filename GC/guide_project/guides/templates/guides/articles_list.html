@@ -48,7 +48,9 @@
                     <a class="btn-delete" onclick="document.getElementById('deleteArticleModal{{ article.id }}').style.display='flex'; return false;">🗑️</a>
                     <div class="country-info">
                         <h5 class="country-name">
-                            <a href="{{ article.link }}" target="_blank" style="text-decoration: none; color: inherit;">{{ article.title }}</a>
+                            <a href="{{ article.link }}" target="_blank" class="article-title-link">
+                                {{ article.title }}
+                            </a>
                         </h5>
                         <p class="country-details">
                             Обновлено: {{ article.update|date:"d.m.Y" }}
