@@ -16,23 +16,15 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     <li><a class="nav-link" href="{% url 'guides:home' %}">Главная</a></li>
+                    {% if user.is_staff or user.is_superuser %}
                     <li><a class="nav-link" href="{% url 'guides:country_list' %}">Страны</a></li>
+                    {% endif %}
                     <li><a class="nav-link" href="{% url 'guides:articles_list' %}">Статьи и приложения</a></li>
                     <li><a class="nav-link" href="{% url 'guides:phrases_list' %}">Категории и фразы</a></li>
-                    
-                     <!-- Кнопки для администратора -->
-                 
-                     <!--  {% if user.is_authenticated %}
-                        {% if user.is_staff or user.is_superuser %}
-                            <li><a class="nav-link" href="{% url 'admin:index' %}">Админка</a></li>
-                        {% endif %}
-                        <li><a class="nav-link" href="{% url 'admin:logout' %}">Выйти</a></li>
-                    {% else %}
-                        <li><a class="nav-link" href="{% url 'admin:login' %}">Вход</a></li>
-                    {% endif %} -->
-                    <!-- Если пользователь не авторизован — показывает "Вход", если пользователь авторизован, но не админ показывает только "Выйти", 
-                     если пользователь администратор  показывает "Админка" и "Выйти" -->
-
+                    {% if user.is_staff or user.is_superuser %}
+                        <li><a class="nav-link" href="{% url 'admin:index' %}">Админка</a></li>
+                    {% endif %}
+                    <li><a class="nav-link" href="{% url 'guides:budget' %}">Бюджет</a></li>
                 </ul>
             </div>
         </div>

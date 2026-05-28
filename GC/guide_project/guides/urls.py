@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
 
 from django.contrib.auth import views as auth_views
 
@@ -8,8 +9,6 @@ app_name = 'guides'
 
 urlpatterns = [
 
-    path('', views.home, name='home'),
-    path('country_create/', views.country_create, name='country_create'),
     path('country/<int:country_id>/', views.country_detail, name='country_detail'),
     path('articles/', views.articles_list, name='articles_list'),
     path('phrases/', views.phrases_list, name='phrases_list'),
@@ -34,6 +33,7 @@ urlpatterns = [
     path('phrase/edit/<int:phrase_id>/', views.phrase_edit, name='phrase_edit'),
     path('phrase/delete/<int:phrase_id>/', views.phrase_delete, name='phrase_delete'),
 
+
     #Вход
     path('', auth_views.LoginView.as_view(template_name='guides/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
@@ -49,5 +49,12 @@ urlpatterns = [
     path('country/<int:pk>/delete/', views.country_delete, name='country_delete'),
     # Добавление поездки с бюджетом
     path('trip/create/', views.trip_create, name='trip_create'),
+
+    # Добавление поездки
+    path('budget/', views.latest_budget, name='budget'),
+    path('trip/<int:trip_id>/budget/', views.trip_budget, name='trip_budget'),
+    path('trip/<int:trip_id>/complete/', views.complete_trip, name='complete_trip'),
+    path('api/add-expense/<int:trip_id>/', views.api_add_expense, name='api_add_expense'),
+    path('api/complete-trip/<int:trip_id>/', views.api_complete_trip, name='api_complete_trip'),
 
 ]
