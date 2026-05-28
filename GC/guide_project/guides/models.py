@@ -1,0 +1,128 @@
+from django.db import models
+from django.contrib.auth.models import User
+# Модель страны
+class Country(models.Model):
+    name = models.CharField(max_length=100,verbose_name="Название страны")
+    currency = models.CharField(max_length=100,verbose_name="Код валюты")
+    vat_rate = models.DecimalField(max_digits=3,decimal_places=2,verbose_name="Налог (%)")
+    language = models.CharField(max_length=100,verbose_name="Язык")
+   
+    def __str__(self):
+            return self.name 
+    class Meta:
+           verbose_name = "Страна"
+           verbose_name_plural = "Страны"
+
+class Article(models.Model):
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='articles')
+    title = models.CharField(max_length=200, verbose_name="Заголовок")
+    link = models.URLField(verbose_name="Ссылка на статью")
+    update = models.DateField(auto_now=True, verbose_name="Дата обновления")
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Статья"
+        verbose_name_plural = "Статьи"
+
+from django.db import models
+
+class LocalApp(models.Model):
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='apps')
+    title = models.CharField(max_length=200, verbose_name="Название приложения")
+    description = models.TextField(verbose_name="Описание")
+    logo = models.ImageField(upload_to='apps_logos/', blank=True, null=True, verbose_name="Логотип")
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Приложение"
+        verbose_name_plural = "Приложения"
+
+class PhraseCategory(models.Model):
+    title = models.CharField(max_length=100, verbose_name="Название категории")
+    update = models.DateField(auto_now=True, verbose_name="Дата обновления")
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Категория фраз"
+        verbose_name_plural = "Категории фраз"
+
+
+class Phrase(models.Model):
+    category = models.ForeignKey(PhraseCategory, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Категория")
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, verbose_name="Страна")
+    original_text = models.CharField(max_length=255, verbose_name="Оригинал")
+    translated_text = models.CharField(max_length=255, verbose_name="Перевод")
+    transliteration = models.CharField(max_length=255, blank=True, verbose_name="Транслитерация")
+
+    def __str__(self):
+        return self.original_text
+
+    class Meta:
+        verbose_name = "Фраза"
+        verbose_name_plural = "Фразы"
+
+# Модель поездки
+class Trip(models.Model):
+    сountry = models.ForeignKey(Country,on_delete=models.CASCADE, related_name='сountry',verbose_name="Страна")
+    user = models.ForeignKey(User,on_delete=models.CASCADE, verbose_name="Пользователь")
+    start_date = models.DateField(verbose_name="Дата начала поездки")
+    end_date = models.DateField(verbose_name="Дата окончания поездки")
+   
+    def __str__(self):
+            return f"{self.сountry.name} - {self.start_date}"  
+
+# Модель поездки
+class Trip(models.Model):
+    country = models.ForeignKey(Country,on_delete=models.CASCADE, related_name='country',verbose_name="Страна")
+    user = models.ForeignKey(User,on_delete=models.CASCADE, verbose_name="Пользователь")
+    start_date = models.DateField(verbose_name="Дата начала поездки")
+    end_date = models.DateField(verbose_name="Дата окончания поездки")
+    is_active = models.BooleanField(default=True)
+   
+    def __str__(self):
+            return f"{self.country.name} - {self.start_date}"  
+    class Meta:
+           verbose_name = "Поездка"
+           verbose_name_plural = "Поездки"
+
+
+
+# Модель бюджета
+class Budget(models.Model):
+    trip = models.ForeignKey(Trip,on_delete=models.CASCADE, related_name='trip',verbose_name="Поездка")
+    amount = models.DecimalField(max_digits=3,decimal_places=2,verbose_name="Бюджет")
+    daily_limit = models.DecimalField(max_digits=3,decimal_places=2,verbose_name="Лимит на день")
+    threshold_limit = models.BooleanField(verbose_name="Наличие пороговых уведомлений")    
+    spent = models.DecimalField(max_digits=3,decimal_places=2,verbose_name="Расход")
+   
+    def __str__(self):
+            return self.amount   
+    class Meta:
+           verbose_name = "Бюджет"
+           verbose_name_plural = "Бюджеты"
+
+
+class Budget(models.Model):
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name='budgets', verbose_name="Поездка")
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="Бюджет")
+    daily_limit = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="Лимит на день")
+    threshold_limit = models.BooleanField(default=False, verbose_name="Наличие пороговых уведомлений")    
+    spent = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="Расход")
+   
+    def __str__(self):
+        return f"Бюджет поездки: {self.amount}"
+    
+    @property
+    def remaining(self):
+        return self.amount - self.spent
+    
+    class Meta:
+        verbose_name = "Бюджет"
+        verbose_name_plural = "Бюджеты"
+

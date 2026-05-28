@@ -1,0 +1,61 @@
+{% extends 'guides/base.html' %}
+{% load static %}
+
+{% block title %}ГПС - {% if mode == 'create' %}Добавление{% else %}Редактирование{% endif %} фразы{% endblock %}
+
+{% block content %}
+<div class="container-py-4">
+    <div class="card">
+        <div class="card-header">
+            <h4>{% if mode == 'create' %}Добавить фразу{% else %}Редактировать фразу{% endif %}</h4>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label class="form-label">Страна</label>
+                    <select name="country_id" required>
+                        {% for country in countries %}
+                            <option value="{{ country.id }}" {% if phrase and phrase.country.id == country.id %}selected{% endif %}>
+                                {{ country.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Категория</label>
+                    <select name="category_id" required>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}" {% if phrase and phrase.category.id == category.id %}selected{% endif %}>
+                                {{ category.title }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Оригинал</label>
+                    <input type="text" name="original_text" value="{{ phrase.original_text|default:'' }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Перевод</label>
+                    <input type="text" name="translated_text" value="{{ phrase.translated_text|default:'' }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Транслитерация (произношение)</label>
+                    <input type="text" name="transliteration" value="{{ phrase.transliteration|default:'' }}" placeholder="например: хэллоу">
+                </div>
+                
+                <div class="mt-3">
+                    <button type="submit" class="btn-success">Сохранить</button>
+                    <a href="{% url 'guides:phrases_list' %}" class="btn-secondary">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
