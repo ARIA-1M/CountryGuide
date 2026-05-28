@@ -6,11 +6,14 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-<<<<<<< HEAD
-    path('', include('guide.urls')),
-=======
+
+
     path('', include('guides.urls')),
->>>>>>> developP
+
 ]
 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+
+    

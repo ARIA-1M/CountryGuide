@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 /* Общее оформление*/
->>>>>>> developP
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +10,7 @@
   --gradient-start: #E5E7EB; /* Начало градиента фона */
   --gradient-end: #67738C; /* Конец градиента фона */
   --footer-text: #1F2937; /* Цвет подвала и шапки  и основной цвет текста */
-  --divider-icon: #191C22; /* Дополнительный цвет для разделителей, иконок и второстепенных акцентов */
+  --divider-icon: #202122; /* Дополнительный цвет для разделителей, иконок и второстепенных акцентов */
   --shadow: 0 6px 8px rgba(17, 18, 24, 0.1); /* Тень */
   --border-radius: 8px; /* Закругление для элементов */
 }
@@ -34,10 +31,7 @@ body {
     flex-direction: column;
 }
 
-<<<<<<< HEAD
-=======
 
->>>>>>> developP
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -45,10 +39,146 @@ body {
     flex: 1;
 }
 
-<<<<<<< HEAD
-=======
+/* Страница входа и регистрации */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+}
+
+.auth-card {
+    max-width: 450px;
+    width: 100%;
+    background: var(--box-color);
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+}
+
+.auth-header {
+    background: var(--footer-text);
+    color: var(--box-color);
+    padding: 20px;
+    border-radius: 15px 15px 0 0;
+    text-align: center;
+}
+
+.auth-header h4 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.auth-body {
+    padding: 25px;
+}
+
+.auth-body .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--gradient-start);
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background: white;
+}
+
+.auth-body .btn-primary {
+    width: 100%;
+    padding: 10px;
+    background: var(--footer-text);
+    border: none;
+    border-radius: 8px;
+    color: var(--box-color);
+    cursor: pointer;
+}
+
+.auth-body .btn-primary:hover {
+    background: var(--divider-icon);
+}
+
+.auth-footer {
+    text-align: center;
+    padding: 15px;
+    border-top: 1px solid var(--gradient-start);
+}
+
+.auth-footer a {
+    color: var(--divider-icon);
+    text-decoration: none;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 576px) {
+    .auth-card {
+        max-width: 100%;
+    }
+}
+
+/* Главная страница */
+.content {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.text p {
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 1.4;
+    font-style: italic;
+    margin-bottom: 40px;
+    max-width: 600px;
+}
+
+.btn-start {
+    display: inline-block;
+    background: var(--gradient-end);
+    color: #ffffff;
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+    box-shadow: var(--shadow);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-start:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    filter: brightness(0.95);
+}
+
+@media (max-width: 768px) {
+    .text p {
+        font-size: 1.3rem;
+    }
+    
+    .btn-start {
+        padding: 10px 25px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .text p {
+        font-size: 1.1rem;
+    }
+}
+
 /* Навигация */
->>>>>>> developP
 .navbar {
     background: var(--footer-text);
     padding: 1rem 2rem;
@@ -99,10 +229,7 @@ body {
     background: var(--gradient-end);
 }
 
-<<<<<<< HEAD
-=======
 /* Подвал */
->>>>>>> developP
 .footer {
     background: var(--footer-text);
     color: var(--box-color);
@@ -117,8 +244,63 @@ body {
     padding: 0;
     text-align: left;
 }
-<<<<<<< HEAD
-=======
+
+/* Слайдер */
+.slider-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.slider {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Затемнение поверх всего слайдера */
+.slider-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.content {
+    position: relative;
+    z-index: 2;
+    color: white;
+}
+
+
 
 /* Адаптив главной страницы и подвала и шапки */
 @media (max-width: 1200px) {
@@ -144,8 +326,8 @@ body {
 
 /* Карточка добавление*/
 .container-py-4{
-    max-width: 700px;
-    margin: 0 auto;  
+    max-width: 900px;
+    margin: 0px auto;
     padding: 20px;
 }
 
@@ -232,6 +414,17 @@ input, textarea, select {
 
 .btn-secondary:hover {
     background: #4b5467;
+}
+
+.alert-info {
+    background: #f0f7ff;
+    border: 2px solid var(--footer-text);
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin: 10px 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #1a1a2e;
 }
 
 /* Адаптив для карточки добавления*/
@@ -324,4 +517,314 @@ input, textarea, select {
     }
 }
 
->>>>>>> developP
+/* Странница лист объектов */
+.countries-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px 0;
+    gap: 40px;
+}
+
+.btn-primary {
+    background: var(--gradient-end);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.btn-primary:hover {
+    background: var(--divider-icon);
+    transform: translateY(-2px);
+}
+
+.countries-title {
+    font-size: 2.5rem;
+    color: var(--divider-icon);
+}
+
+.countries-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+    max-width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.country-card {
+    position: relative;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.country-card:hover {
+    transform: translateY(-5px);
+}
+
+.country-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.country-info {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.country-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 0.75rem;
+}
+
+.country-details {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.country-details span {
+    display: inline-block;
+    margin-bottom: 0.25rem;
+}
+
+.btn-delete {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--gradient-end);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 10;
+    font-size: 0.9rem;
+}
+
+.btn-delete:hover {
+    background: var(--footer-text);
+    transform: scale(1.1);
+}
+
+/* Адаптив для стран */
+@media (max-width: 1200px) {
+    .countries-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .countries-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .countries-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .countries-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .countries-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .country-info {
+        padding: 1.2rem;
+    }
+    
+    .country-name {
+        font-size: 1.2rem;
+    }
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.btn-danger {
+    background: var(--gradient-end);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-warning {
+    background: var(--footer-text);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Стили для форм */
+.container-py-4 {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.mb-3 {
+    margin-bottom: 1.5rem;
+}
+
+.mt-2 {
+    margin-top: 0.5rem;
+}
+
+.mt-3 {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 15px;
+}
+
+.form-label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+    color: var(--footer-text);
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid var(--gradient-start);
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--gradient-end);
+    box-shadow: 0 0 0 3px rgba(103, 115, 140, 0.1);
+}
+
+textarea {
+    resize: vertical;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+}
+
+/* Маленькие кнопки для фраз */
+.btn-small {
+    background: var(--footer-text);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.75rem;
+    display: inline-block;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-small:hover {
+    background: var(--divider-icon);
+    transform: translateY(-1px);
+}
+
+.btn-small-danger {
+    background: var(--gradient-end);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.75rem;
+    display: inline-block;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-small-danger:hover {
+    background: #4b5467;
+    transform: translateY(-1px);
+}
+
+
+.article-title-link {
+    text-decoration: none;
+    color: var(--footer-text);
+    transition: color 0.2s ease;
+}
+
+.article-title-link:hover {
+    color: var(--gradient-end);
+    text-decoration: underline;
+}

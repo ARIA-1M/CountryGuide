@@ -1,0 +1,47 @@
+{% extends 'guides/auth_base.html' %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h4>Создание аккаунта</h4>
+            <p class="mb-0">Заполните форму для регистрации</p>
+        </div>
+        <div class="auth-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    {{ form.username }}
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Имя</label>
+                    {{ form.first_name }}
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Фамилия</label>
+                    {{ form.last_name }}
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Пароль</label>
+                    {{ form.password1 }}
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Подтвердите пароль</label>
+                    {{ form.password2 }}
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+            </form>
+        </div>
+        <div class="auth-footer">
+            <p class="mb-0">Уже есть аккаунт? <a href="/">Войти</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
