@@ -1,9 +1,9 @@
 from django import forms
 from .models import Country
-
-
-# Форма для создания стран
-
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from .models import Trip
+from .models import Budget
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Trip
@@ -74,9 +74,10 @@ class TripBudgetForm(forms.ModelForm):
     
     class Meta:
         model = Trip
-        fields = ['сountry', 'start_date', 'end_date']
+
+        fields = ['country', 'start_date', 'end_date']
         widgets = {
-            'сountry': forms.Select(attrs={'class': 'form-control'}),
+            'country': forms.Select(attrs={'class': 'form-control'}),
             'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
         }

@@ -327,6 +327,7 @@ body {
 /* Карточка добавление*/
 .container-py-4{
     max-width: 900px;
+    width: 100%;
     margin: 0px auto;
     padding: 20px;
 }
@@ -387,7 +388,8 @@ input, textarea, select {
 .btn-success, .btn-secondary {
     width: 100%;
     text-align: center;
-    padding: 10px 20px;
+    padding: 10px 25px;
+    margin-bottom: 10px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
@@ -420,8 +422,8 @@ input, textarea, select {
     background: #f0f7ff;
     border: 2px solid var(--footer-text);
     border-radius: 12px;
-    padding: 15px 20px;
-    margin: 10px 0;
+    padding: 0 20px;
+    margin: 0;
     font-size: 0.95rem;
     line-height: 1.5;
     color: #1a1a2e;
@@ -717,114 +719,213 @@ input, textarea, select {
     cursor: pointer;
 }
 
-/* Стили для форм */
-.container-py-4 {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 0 20px;
+/* Страничка с бюджетом */
+.budget-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.mb-3 {
-    margin-bottom: 1.5rem;
+.budget-card {
+    background: var(--box-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
 }
 
-.mt-2 {
-    margin-top: 0.5rem;
+.budget-card-header {
+    background: var(--footer-text);
+    color: var(--box-color);
+    padding: 20px;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
-.mt-3 {
-    margin-top: 1.5rem;
+.budget-card-header h4 {
+    margin: 0 0 5px;
+    font-size: 1.4rem;
+}
+
+.trip-dates {
+    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.budget-card-body {
+    padding: 20px;
+}
+
+.stats-grid {
     display: flex;
     gap: 15px;
+    margin-bottom: 20px;
 }
 
-.form-label {
-    font-weight: 600;
+.stat-card {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    background: var(--gradient-start);
+    border-radius: var(--border-radius);
+}
+
+.stat-label {
     display: block;
-    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--footer-text);
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: bold;
     color: var(--footer-text);
 }
 
-input, textarea, select {
-    width: 100%;
-    padding: 10px 15px;
+.text-danger { color: #dc3545; }
+.text-success { color: #28a745; }
+
+.divider {
+    border: none;
+    border-top: 1px solid var(--gradient-start);
+    margin: 20px 0;
+}
+
+.section-title {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: var(--footer-text);
+}
+
+.expense-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-field label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--footer-text);
+}
+
+.form-control {
+    padding: 10px;
     border: 1px solid var(--gradient-start);
-    border-radius: 10px;
-    font-size: 1rem;
-    transition: all 0.3s;
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    background: white;
 }
 
-input:focus, textarea:focus, select:focus {
+.form-control:focus {
     outline: none;
-    border-color: var(--gradient-end);
-    box-shadow: 0 0 0 3px rgba(103, 115, 140, 0.1);
+    border-color: var(--footer-text);
 }
 
-textarea {
-    resize: vertical;
+.form-control:disabled {
+    background: var(--gradient-start);
 }
 
-.btn-danger {
+.checkbox-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox-field input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.checkbox-field label {
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--footer-text);
+}
+
+.btn-apply {
+    background: var(--footer-text);
+    color: var(--box-color);
+    padding: 10px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.btn-apply:hover:not(:disabled) {
+    background: var(--divider-icon);
+}
+
+.btn-apply:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-complete {
     background: #dc3545;
     color: white;
+    padding: 10px;
     border: none;
-    padding: 10px 25px;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
+    font-weight: 600;
     cursor: pointer;
-    font-size: 1rem;
-    text-decoration: none;
-    display: inline-block;
+    width: 100%;
 }
 
-.btn-danger:hover {
+.btn-complete:hover {
     background: #c82333;
 }
 
-/* Маленькие кнопки для фраз */
-.btn-small {
-    background: var(--footer-text);
-    color: white;
-    padding: 5px 12px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 0.75rem;
-    display: inline-block;
-    transition: all 0.3s;
-    border: none;
-    cursor: pointer;
-}
-
-.btn-small:hover {
-    background: var(--divider-icon);
-    transform: translateY(-1px);
-}
-
-.btn-small-danger {
-    background: var(--gradient-end);
-    color: white;
-    padding: 5px 12px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 0.75rem;
-    display: inline-block;
-    transition: all 0.3s;
-    border: none;
-    cursor: pointer;
-}
-
-.btn-small-danger:hover {
-    background: #4b5467;
-    transform: translateY(-1px);
-}
-
-
-.article-title-link {
-    text-decoration: none;
+.alert-completed {
+    background: var(--gradient-start);
     color: var(--footer-text);
-    transition: color 0.2s ease;
+    padding: 12px;
+    border-radius: var(--border-radius);
+    text-align: center;
 }
 
-.article-title-link:hover {
-    color: var(--gradient-end);
-    text-decoration: underline;
+@media (max-width: 600px) {
+    .budget-container {
+        padding: 15px;
+    }
+    
+    .budget-card-body {
+        padding: 15px;
+    }
+    
+    .stats-grid {
+        gap: 10px;
+    }
+    
+    .stat-card {
+        padding: 8px;
+    }
+    
+    .stat-value {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        flex-direction: column;
+    }
+    
+    .stat-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .stat-label {
+        margin-bottom: 0;
+    }
 }
