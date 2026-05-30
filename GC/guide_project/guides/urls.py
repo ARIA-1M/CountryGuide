@@ -49,6 +49,8 @@ urlpatterns = [
     path('country/<int:pk>/delete/', views.country_delete, name='country_delete'),
     # Добавление поездки с бюджетом
     path('trip/create/', views.trip_create, name='trip_create'),
+    # Редактирование поездки с бюджетом
+    path('trip/<int:trip_id>/edit/', views.trip_edit, name='trip_edit'),
 
     # Добавление поездки
     path('budget/', views.latest_budget, name='budget'),

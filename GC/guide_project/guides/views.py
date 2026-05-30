@@ -369,6 +369,40 @@ def trip_budget(request, trip_id):
         'budget': budget,
     })
 
+
+# Редактирование поездки
+def trip_edit(request, trip_id):
+    trip = get_object_or_404(Trip, id=trip_id, user=request.user)
+    budget = Budget.objects.get(trip=trip)
+    
+    if request.method == 'POST':
+        form = TripBudgetForm(request.POST, instance=trip)
+        if form.is_valid():
+            # Обновляем поездку вручную (без form.save)
+            trip.country = form.cleaned_data['country']
+            trip.start_date = form.cleaned_data['start_date']
+            trip.end_date = form.cleaned_data['end_date']
+            trip.save()
+            
+            # Обновляем бюджет
+            budget.amount = form.cleaned_data['amount']
+            budget.daily_limit = form.cleaned_data['daily_limit']
+            budget.threshold_limit = form.cleaned_data['threshold_limit']
+            budget.save()
+            
+            return redirect('guides:trip_budget', trip_id=trip.id)
+    else:
+        form = TripBudgetForm(instance=trip, initial={
+            'amount': budget.amount,
+            'daily_limit': budget.daily_limit,
+            'threshold_limit': budget.threshold_limit,
+        })
+    
+    return render(request, 'guides/trip_create.html', {
+        'form': form, 
+        'title': 'Редактировать поездку'
+    })
+
 # Нахождение актуально бюджета
 def latest_budget(request):
     trip = Trip.objects.filter(user=request.user, is_active=True).first()

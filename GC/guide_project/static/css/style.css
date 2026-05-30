@@ -884,6 +884,10 @@ input, textarea, select {
     background: #c82333;
 }
 
+.btn btn-primary{
+    text-align: center;
+}
+
 .alert-completed {
     background: var(--gradient-start);
     color: var(--footer-text);
