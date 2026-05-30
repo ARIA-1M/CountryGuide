@@ -4,8 +4,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Trip
 from .models import Budget
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from .models import Trip
+from .models import Budget
 
 # Форма для стран
+
 class CountryForm(forms.ModelForm):
 
     class Meta:
@@ -31,7 +36,10 @@ class CountryForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Язык'
             })
+
         }
+
+        
 
 # Форма для пользователя
 class UsersForm(UserCreationForm):
@@ -66,6 +74,7 @@ class TripBudgetForm(forms.ModelForm):
     
     class Meta:
         model = Trip
+
         fields = ['country', 'start_date', 'end_date']
         widgets = {
             'country': forms.Select(attrs={'class': 'form-control'}),
@@ -88,3 +97,4 @@ class TripBudgetForm(forms.ModelForm):
                 spent=0
             )
         return trip
+
