@@ -24,14 +24,14 @@ def is_admin(user):
 def home(request):
     return render(request, 'guides/home.html')
 
-@login_required
+
 @user_passes_test(is_admin)
 # Список стран
 def country_list(request):
     countries = Country.objects.all()
     return render(request, 'guides/country_list.html', {'countries': countries})
 
-@login_required
+
 @user_passes_test(is_admin)
 # Добавление новой страны 
 def country_create(request):
@@ -77,7 +77,7 @@ def articles_list(request):
         'selected_country': selected_country,
     })
 
-@login_required
+
 @user_passes_test(is_admin)
 # Удаление страны
 def country_delete(request, pk):
