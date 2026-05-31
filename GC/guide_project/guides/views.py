@@ -24,11 +24,15 @@ def is_admin(user):
 def home(request):
     return render(request, 'guides/home.html')
 
+@login_required
+@user_passes_test(is_admin)
 # Список стран
 def country_list(request):
     countries = Country.objects.all()
     return render(request, 'guides/country_list.html', {'countries': countries})
 
+@login_required
+@user_passes_test(is_admin)
 # Добавление новой страны 
 def country_create(request):
     if request.method == 'POST':
@@ -73,7 +77,8 @@ def articles_list(request):
         'selected_country': selected_country,
     })
 
-
+@login_required
+@user_passes_test(is_admin)
 # Удаление страны
 def country_delete(request, pk):
     country = get_object_or_404(Country, pk=pk)
@@ -101,7 +106,7 @@ def register(request):
     
     return render(request, 'guides/register.html', {'form': form})
 
-
+@login_required
 # Создание поездки
 def trip_create(request):
     if request.method == 'POST':
@@ -342,7 +347,7 @@ def phrase_delete(request, phrase_id):
         messages.success(request, 'Фраза удалена')
         return redirect('guides:phrases_list')
     return render(request, 'guides/confirm_delete.html', {'object': phrase, 'type': 'фразу'})
-
+@login_required
 # Создание поездки
 def trip_create(request):
     if request.method == 'POST':
@@ -358,7 +363,7 @@ def trip_create(request):
     
     return render(request, 'guides/trip_create.html', {'form': form, 'title': 'Создать поездку'})
             
-
+@login_required
 # Страница бюджета активной поездки
 def trip_budget(request, trip_id):
     trip = get_object_or_404(Trip, id=trip_id, user=request.user)
@@ -369,7 +374,7 @@ def trip_budget(request, trip_id):
         'budget': budget,
     })
 
-
+@login_required
 # Редактирование поездки
 def trip_edit(request, trip_id):
     trip = get_object_or_404(Trip, id=trip_id, user=request.user)
@@ -403,6 +408,7 @@ def trip_edit(request, trip_id):
         'title': 'Редактировать поездку'
     })
 
+@login_required
 # Нахождение актуально бюджета
 def latest_budget(request):
     trip = Trip.objects.filter(user=request.user, is_active=True).first()
@@ -410,6 +416,7 @@ def latest_budget(request):
         return redirect('guides:trip_create')
     return redirect('guides:trip_budget', trip_id=trip.id)  
 
+@login_required
 # Завершение поездки
 def complete_trip(request, trip_id):
     if request.method == 'POST':
@@ -420,6 +427,7 @@ def complete_trip(request, trip_id):
         return redirect('guides:home')
     return redirect('guides:trip_budget', trip_id=trip_id)
 
+@login_required
 # Обработка обновлнеи
 def api_add_expense(request, trip_id):  
     if request.method == 'POST':
