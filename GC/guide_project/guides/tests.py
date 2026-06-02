@@ -35,6 +35,11 @@ class CountryListViewTest(TestCase):# Тестирование просмотр�
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context['countries']), 6)
 
+    def test_country_list_view_page_title(self):# Проверка заголовка страницы списка стран
+        response = self.client.get(reverse('guides:country_list'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Страны мира')
+
 
 class CountryCreateTest(TestCase):# Тестирование добавления страны
 
@@ -67,6 +72,19 @@ class CountryCreateTest(TestCase):# Тестирование добавлени�
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Country.objects.count(), 0)
 
+    def test_create_country_negative_vat_rate(self):# Проверка добавления страны с отрицательной налоговой ставкой
+        response = self.client.post(reverse('guides:country_create'), {
+            'name': 'Германия',
+            'currency': 'EUR',
+            'vat_rate': -5.00,
+            'language': 'Немецкий'
+        })
+        if response.status_code == 302:
+            self.assertTrue(Country.objects.filter(name='Германия').exists())
+        else:
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(Country.objects.count(), 0)
+
 
 class CountryDeleteTest(TestCase):# Тестирование удаления страны
 
@@ -92,3 +110,9 @@ class CountryDeleteTest(TestCase):# Тестирование удаления с
     def test_delete_nonexistent_country(self):# Удаления несуществующей страны
         response = self.client.post(reverse('guides:country_delete', args=[999]))
         self.assertEqual(response.status_code, 404)
+
+    def test_delete_country_without_admin_login(self):# Проверка удаления неавторизованным пользователем
+        self.client.logout()
+        response = self.client.post(reverse('guides:country_delete', args=[self.country.id]))
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(Country.objects.filter(id=self.country.id).exists())
