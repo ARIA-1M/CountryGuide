@@ -43,6 +43,7 @@ python manage.py runserver
 
 
 ##  Структура проекта
+```text
 GC/
 └── guide_project/
     ├── guides/                 # Основное приложение
@@ -61,7 +62,7 @@ GC/
     ├── static/                 # Общие статические файлы
     ├── manage.py               # Управляющий скрипт Django
     └── db.sqlite3              # База данных (разработка)
-
+```
 
 ##  Запуск всех тестов
 python manage.py test guides -v 2
