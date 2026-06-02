@@ -1,0 +1,55 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/27.0.9 Chrome/134.0.6998.205 Electron/35.4.0 Safari/537.36" version="27.0.9">
+  <diagram name="Страница — 1" id="dZp_MkGKJdSJmvAm1BGM">
+    <mxGraphModel dx="1426" dy="841" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="u5nW88TQCqW2Hede-KSL-1" value="&lt;div&gt;Серверная часть&lt;/div&gt;" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="80" y="120" width="250" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="u5nW88TQCqW2Hede-KSL-2" value="Сервер БД" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="170" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="u5nW88TQCqW2Hede-KSL-3" value="Сервер приложений" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="240" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="u5nW88TQCqW2Hede-KSL-4" value="Клиент" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="80" y="490" width="240" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="u5nW88TQCqW2Hede-KSL-5" value="Web-браузер" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="610" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="u5nW88TQCqW2Hede-KSL-6" value="Мобильное приложение" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="535" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="u5nW88TQCqW2Hede-KSL-7" value="Внешние сервисы" style="verticalAlign=top;align=left;spacingTop=8;spacingLeft=2;spacingRight=12;shape=cube;size=10;direction=south;fontStyle=4;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="460" y="105" width="270" height="265" as="geometry" />
+        </mxCell>
+        <mxCell id="u5nW88TQCqW2Hede-KSL-8" value="API валют" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="150" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="u5nW88TQCqW2Hede-KSL-9" value="API новостей" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="220" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="u5nW88TQCqW2Hede-KSL-10" value="API платежей" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="290" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="u5nW88TQCqW2Hede-KSL-11" value="Web-сервер" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="310" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="u5nW88TQCqW2Hede-KSL-12" value="" style="endArrow=none;html=1;rounded=0;exitX=0.335;exitY=0.004;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.392;entryY=0.993;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="u5nW88TQCqW2Hede-KSL-1" target="u5nW88TQCqW2Hede-KSL-7">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="390" as="sourcePoint" />
+            <mxPoint x="450" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="u5nW88TQCqW2Hede-KSL-13" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0;entryDx=260;entryDy=130;entryPerimeter=0;" edge="1" parent="1" target="u5nW88TQCqW2Hede-KSL-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="200" y="490" as="sourcePoint" />
+            <mxPoint x="440" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
