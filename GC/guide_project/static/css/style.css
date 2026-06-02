@@ -884,8 +884,24 @@ input, textarea, select {
     background: #c82333;
 }
 
-.btn btn-primary{
+.btn-apply-link {
+    display: block;
+    width: 100%;
+    background: var(--footer-text);
+    color: var(--box-color);
+    padding: 10px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-weight: 600;
     text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+
+.btn-apply-link:hover {
+    background: var(--divider-icon);
 }
 
 .alert-completed {
