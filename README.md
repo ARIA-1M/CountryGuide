@@ -36,10 +36,7 @@ git clone https://github.com/ARIA-1M/CountryGuide.git
 cd country-guide/GC/guide_project
 
 python -m venv venv
-###Windows:
 venv\Scripts\activate
-###macOS/Linux:
-source venv/bin/activate
 
 python manage.py migrate
 python manage.py runserver
